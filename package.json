@@ -35,6 +35,7 @@
     "md:watch": "while inotifywait -e close_write README.md; do yarn md; done",
     "docs-preview:watch": "cd docs; bundle exec jekyll serve --livereload",
     "docs-preview": "cd docs; bundle exec jekyll serve",
-    "build-demo": "cd demo; yarn install; yarn build; cp -r public ../docs/demo"
+    "demo:build": "cd demo; yarn install; yarn build; cp -r public ../docs/demo",
+    "demo:watch": "cd demo; yarn gatsby develop;"
   }
 }

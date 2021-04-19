@@ -78,6 +78,21 @@
         "focus": false,
         "panel": "dedicated"
       }
+    },
+    {
+      "label": "demo:watch",
+      "runOptions": { "runOn": "folderOpen" },
+      "type": "shell",
+      "command": "yarn",
+      "isBackground": true,
+      "args": ["demo:watch"],
+      "group": "none",
+      "presentation": {
+        "reveal": "always",
+        "echo": false,
+        "focus": false,
+        "panel": "dedicated"
+      }
     }
   ]
 }
