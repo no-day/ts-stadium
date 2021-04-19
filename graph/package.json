@@ -1,0 +1,4 @@
+{
+  "main": "../dist/graph.js",
+  "typings": "../dist/graph.d.ts"
+}

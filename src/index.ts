@@ -6,122 +6,91 @@ import * as A from 'fp-ts/Array';
 import { pipe } from 'fp-ts/function';
 
 // --------------------------------------------------------------------------------------------------------------------
-// Util
+// Model
 // --------------------------------------------------------------------------------------------------------------------
 
 /**
- * It's a greeting
+ * A type that describes data relations of a state machine.
  *
  * @since 1.0.0
- * @category Util
- * @example
- *   import { createStateMachine } from 'fp-ts-library-template';
- *
- *   type StateMachine = { states: { On: true; Off: false }; events: { Toggle: null } };
- *
- *   const stateMachine = createStateMachine<StateMachine>()({
- *     states: { On: { events: ['Toggle'] }, Off: { events: ['Toggle'] } },
- *     events: { Toggle: { toStates: ['On', 'Off'] } },
- *   });
+ * @category Constructors
  */
-export const createStateMachine = <T extends TSpec>() => <spec extends Spec<T>>(spec: spec): StateMachine<T> =>
-  (spec as unknown) as StateMachine<T>;
-
-/**
- * It's a greeting
- *
- * @since 1.0.0
- * @category Util
- */
-export const toGraph = (stateMachine: StateMachine<any>): Graph => ({
-  nodes: [
-    ...pipe(
-      stateMachine.states,
-      R.keys,
-      A.map((id) => ({ tag: 'State' as const, id }))
-    ),
-    ...pipe(
-      stateMachine.events,
-      R.keys,
-      A.map((id) => ({ tag: 'Event' as const, id }))
-    ),
-  ],
-  edges: [
-    ...pipe(
-      stateMachine.states,
-      R.collect((key, val) => [key, val] as const),
-      A.chain(([from, { events }]) =>
-        pipe(
-          events,
-          A.map((to) => ({ from: from.toString(), to: to.toString() }))
-        )
-      )
-    ),
-    ...pipe(
-      stateMachine.events,
-      R.collect((key, val) => [key, val] as const),
-      A.chain(([from, { toStates, toEvents }]) =>
-        pipe(
-          [...(toStates || []), ...(toEvents || [])],
-          A.map((to) => ({ from: from.toString(), to: to.toString() }))
-        )
-      )
-    ),
-  ],
-});
-
-/**
- * It's a greeting
- *
- * @since 1.0.0
- * @category Util
- */
-export const graphToDot = (graph: Graph): string => {
-  const g = Graphviz.digraph();
-
-  graph.nodes.forEach((node) =>
-    g.createNode(
-      node.id,
-      {
-        State: { shape: 'box', style: 'rounded, filled', fillcolor: '#82E0AA' },
-        Event: { shape: 'box', style: 'filled', fillcolor: '#F6DDCC', height: 0.2 },
-      }[node.tag]
-    )
-  );
-
-  graph.edges.forEach((edge) => g.createEdge([edge.from, edge.to]));
-
-  return Graphviz.toDot(g);
-};
-
-// --------------------------------------------------------------------------------------------------------------------
-// Internal
-// --------------------------------------------------------------------------------------------------------------------
-
-type TSpec = { states: Record<any, any>; events: Record<any, any> };
-
-type Spec<T extends TSpec> = {
-  states: Record<keyof T['states'], { events: (keyof T['events'])[] }>;
-  events: Record<keyof T['events'], { toStates?: (keyof T['states'])[]; toEvents?: (keyof T['events'])[] }>;
-};
-
-type StateMachine<T extends TSpec> = {
+export type StateMachine<data extends StateMachineData> = {
   states: {
-    [key in keyof T['states']]: {
-      data: T['states'][key];
-      events: (keyof T['events'])[];
+    [key in keyof data['states']]: {
+      data: data['states'][key];
+      events: (keyof data['events'])[];
     };
   };
   events: {
-    [key in keyof T['events']]: {
-      data: T['events'][key];
-      toStates?: (keyof T['states'])[];
-      toEvents?: (keyof T['events'])[];
+    [key in keyof data['events']]: {
+      data: data['events'][key];
+      toStates?: (keyof data['states'])[];
+      toEvents?: (keyof data['events'])[];
     };
   };
 };
 
-type Graph = {
-  nodes: { tag: 'Event' | 'State'; id: string }[];
-  edges: { from: string; to: string }[];
+// --------------------------------------------------------------------------------------------------------------------
+// Constructors
+// --------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Describes the data of a state machine. That means, the types for each state plus the payloads for each event.
+ *
+ * @since 1.0.0
+ * @category Constructors
+ */
+export type StateMachineData = {
+  states: Record<string, unknown>;
+  events: Record<string, unknown>;
 };
+
+/**
+ * Describes state and transition relations of a state machine.
+ *
+ * @since 1.0.0
+ * @category Constructors
+ */
+export type StateMachineSpec<data extends StateMachineData> = {
+  states: Record<
+    keyof data['states'],
+    {
+      events: (keyof data['events'])[];
+    }
+  >;
+  events: Record<
+    keyof data['events'],
+    {
+      toStates?: (keyof data['states'])[];
+      toEvents?: (keyof data['events'])[];
+    }
+  >;
+};
+
+/**
+ * Creates a state machine, given a data type and a description of valid transitions.
+ *
+ * @since 1.0.0
+ * @category Constructors
+ * @example
+ *   import { createStateMachine } from 'fp-ts-library-template';
+ *
+ *   type StateMachine = {
+ *     states: { On: true; Off: false };
+ *     events: { Toggle: null };
+ *   };
+ *
+ *   const stateMachine = createStateMachine<StateMachine>()({
+ *     states: {
+ *       On: { events: ['Toggle'] },
+ *       Off: { events: ['Toggle'] },
+ *     },
+ *     events: {
+ *       Toggle: { toStates: ['On', 'Off'] },
+ *     },
+ *   });
+ */
+export const createStateMachine = <data extends StateMachineData>() => <spec extends StateMachineSpec<data>>(
+  spec: spec
+): StateMachine<data> => (spec as unknown) as StateMachine<data>;

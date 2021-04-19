@@ -63,6 +63,21 @@
       "options": {
         "shell": { "args": ["-i"] }
       }
+    },
+    {
+      "label": "test:watch",
+      "runOptions": { "runOn": "folderOpen" },
+      "type": "shell",
+      "command": "yarn",
+      "isBackground": true,
+      "args": ["test:watch"],
+      "group": "none",
+      "presentation": {
+        "reveal": "always",
+        "echo": false,
+        "focus": false,
+        "panel": "dedicated"
+      }
     }
   ]
 }

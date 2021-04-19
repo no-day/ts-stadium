@@ -1,10 +1,27 @@
-import * as mylib from '../src';
-import * as fc from 'fast-check';
+import * as $ from '../src';
 
 describe('index', () => {
-  it('greets anything', () => {
-    fc.property(fc.string(), (name) => {
-      expect(mylib.greet(name)).toBe(`Hello, ${name}!`);
+  describe('createStateMachine', () => {
+    it('returns itself', () => {
+      expect(
+        $.createStateMachine<any>()({
+          states: {
+            On: { events: ['Toggle'] },
+            Off: { events: ['Toggle'] },
+          },
+          events: {
+            Toggle: { toStates: ['On', 'Off'] },
+          },
+        })
+      ).toStrictEqual({
+        states: {
+          On: { events: ['Toggle'] },
+          Off: { events: ['Toggle'] },
+        },
+        events: {
+          Toggle: { toStates: ['On', 'Off'] },
+        },
+      });
     });
   });
 });
