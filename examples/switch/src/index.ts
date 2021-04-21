@@ -3,8 +3,8 @@ import * as T from 'fp-ts/Task';
 
 export const stateMachine = S.createStateMachine({
   states: {
-    On: { events: ['TurnOff'] },
-    Off: { events: ['TurnOn'] },
+    On: {},
+    Off: { events: ['TurnOn', 'TurnOff'] },
   },
   events: {
     TurnOn: { toStates: ['On'] },
@@ -13,6 +13,6 @@ export const stateMachine = S.createStateMachine({
 });
 
 export const control = S.createControl<T.URI>()(stateMachine, {
-  TurnOn: (state) => T.of({ state: S.tag('On') }),
-  TurnOff: (state) => T.of({ state: S.tag('Off') }),
+  TurnOn: () => T.of({ state: S.tag('On') }),
+  TurnOff: () => T.of({ state: S.tag('Off') }),
 });

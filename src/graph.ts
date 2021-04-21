@@ -4,7 +4,8 @@ import * as Graphviz from 'ts-graphviz';
 import * as R from 'fp-ts/Record';
 import * as A from 'fp-ts/Array';
 import { pipe } from 'fp-ts/function';
-import { StateMachine } from '.';
+import { StateMachine, StateMachineSpec, Name } from '.';
+import * as S from 'fp-ts/Semigroup';
 
 // --------------------------------------------------------------------------------------------------------------------
 // Model
@@ -31,6 +32,56 @@ export type StateMachineGraph = {
 // Constructors
 // --------------------------------------------------------------------------------------------------------------------
 
+const createNodes = (
+  stateMachine: StateMachine
+): StateMachineGraph['nodes'] => [
+  ...pipe(
+    stateMachine.states,
+    R.keys,
+    A.map((id) => ({ tag: 'State' as const, id }))
+  ),
+  ...pipe(
+    stateMachine.events,
+    R.keys,
+    A.map((id) => ({ tag: 'Event' as const, id }))
+  ),
+];
+
+const createEdgesFromStates = (
+  stateMachine: StateMachine
+): StateMachineGraph['edges'] =>
+  pipe(
+    stateMachine.states,
+    R.collect((key, val) => [key, val] as const),
+    A.chain(([from, { events }]) =>
+      pipe(
+        events as Name[],
+        A.map((to) => ({ from: (from as Name).toString(), to: to.toString() }))
+      )
+    )
+  );
+
+const createEdgesFromEvents = (
+  stateMachine: StateMachine
+): StateMachineGraph['edges'] =>
+  pipe(
+    stateMachine.events,
+    R.collect((key, val) => [key, val] as const),
+    A.chain(([from, { toStates, toEvents }]) =>
+      pipe(
+        [...toStates, ...toEvents],
+        A.map((to) => ({ from: (from as Name).toString(), to: to.toString() }))
+      )
+    )
+  );
+
+const createEdges = (
+  stateMachine: StateMachine
+): StateMachineGraph['edges'] => [
+  ...createEdgesFromStates(stateMachine),
+  ...createEdgesFromEvents(stateMachine),
+];
+
 /**
  * Creates a graph representation of a state machine. Suitable for any renderer.
  *
@@ -39,11 +90,6 @@ export type StateMachineGraph = {
  * @example
  *   import { createStateMachine } from 'fp-ts-library-template';
  *   import { createGraph } from 'fp-ts-library-template/graph';
- *
- *   type StateMachine = {
- *     states: { On: true; Off: false };
- *     events: { Toggle: null };
- *   };
  *
  *   const stateMachine = createStateMachine<StateMachine>()({
  *     states: {
@@ -69,41 +115,9 @@ export type StateMachineGraph = {
  *     ],
  *   });
  */
-export const createGraph = (stateMachine: StateMachine<any>): StateMachineGraph => ({
-  nodes: [
-    ...pipe(
-      stateMachine.states,
-      R.keys,
-      A.map((id) => ({ tag: 'State' as const, id }))
-    ),
-    ...pipe(
-      stateMachine.events,
-      R.keys,
-      A.map((id) => ({ tag: 'Event' as const, id }))
-    ),
-  ],
-  edges: [
-    ...pipe(
-      stateMachine.states,
-      R.collect((key, val) => [key, val] as const),
-      A.chain(([from, { events }]) =>
-        pipe(
-          events,
-          A.map((to) => ({ from: from.toString(), to: to.toString() }))
-        )
-      )
-    ),
-    ...pipe(
-      stateMachine.events,
-      R.collect((key, val) => [key, val] as const),
-      A.chain(([from, { toStates, toEvents }]) =>
-        pipe(
-          [...(toStates || []), ...(toEvents || [])],
-          A.map((to) => ({ from: from.toString(), to: to.toString() }))
-        )
-      )
-    ),
-  ],
+export const createGraph = (stateMachine: StateMachine): StateMachineGraph => ({
+  nodes: createNodes(stateMachine),
+  edges: createEdges(stateMachine),
 });
 
 /**

@@ -13,23 +13,21 @@ import { StateMachineGraph } from './graph';
  * @since 1.0.0
  * @category Constructors
  */
-export type StateMachine<
-  SMS extends StateMachineSpec<any, any> = StateMachineSpec<any, any>
-> = {
+export type StateMachine<SMS extends StateMachineSpec = StateMachineSpec> = {
   readonly StateMachine: unique symbol;
 
   states: {
     [S in keyof SMS['states']]: {
       data: Tagged<S, SMS['states'][S]['data']>;
-      events: SMS['states'][S]['events'];
+      events: Normalize<SMS['states'][S]['events'], []>;
     };
   };
 
   events: {
     [E in keyof SMS['events']]: {
       data: Tagged<E, SMS['events'][E]['data']>;
-      toStates: SMS['events'][E]['toStates'];
-      toEvents: SMS['events'][E]['toEvents'];
+      toStates: Normalize<SMS['events'][E]['toStates'], []>;
+      toEvents: Normalize<SMS['events'][E]['toEvents'], []>;
     };
   };
 };
@@ -45,21 +43,21 @@ export type StateMachine<
  * @since 1.0.0
  * @category Constructors
  */
-export type StateMachineSpec<S extends Name, E extends Name> = {
+export type StateMachineSpec<S extends Name = Name, E extends Name = Name> = {
   states: Record<
     S,
     {
-      events?: Tuple<E>;
       data?: any;
+      events?: Tuple<E>;
     }
   >;
 
   events: Record<
     E,
     {
+      data?: any;
       toStates?: Tuple<S>;
       toEvents?: Tuple<E>;
-      data?: any;
     }
   >;
 };
@@ -72,11 +70,6 @@ export type StateMachineSpec<S extends Name, E extends Name> = {
  * @example
  *   import { createStateMachine } from 'fp-ts-library-template';
  *
- *   type StateMachine = {
- *     states: { On: true; Off: false };
- *     events: { Toggle: null };
- *   };
- *
  *   const stateMachine = createStateMachine<StateMachine>()({
  *     states: {
  *       On: { events: ['Toggle'] },
@@ -88,10 +81,12 @@ export type StateMachineSpec<S extends Name, E extends Name> = {
  *   });
  */
 export const createStateMachine = <
-  spec extends StateMachineSpec<keyof spec['states'], keyof spec['events']>
+  S extends keyof SMS['states'],
+  E extends keyof SMS['events'],
+  SMS extends StateMachineSpec<S, E>
 >(
-  spec: spec
-): StateMachine<spec> => spec as any;
+  spec: SMS
+): Extract<StateMachine<SMS>> => spec as any;
 
 // ----------------------------------------------------------------------------
 // Control
@@ -109,17 +104,37 @@ type ControlEvents<C extends URIS, SM extends StateMachine> = {
   >;
 };
 
+/**
+ * @since 1.0.0
+ * @category Control
+ * @example
+ *   import * as SM from 'fp-ts-library-template';
+ *
+ *   const stateMachine = SM.createStateMachine<StateMachine>()({
+ *     states: {
+ *       On: { events: ['Toggle'] },
+ *       Off: { events: ['Toggle'] },
+ *     },
+ *     events: {
+ *       Toggle: { toStates: ['On', 'Off'] },
+ *     },
+ *   });
+ *
+ *   const control = SM.createControl(stateMachine, {
+ *     Toggle: () => Promise.resolve(SM.tag('On')),
+ *   });
+ */
 export const createControl = <C extends URIS>() => <SM extends StateMachine>(
   stateMachine: SM,
   controlEvents: ControlEvents<C, SM>
 ): ((
-  event: EventData<SM>,
-  state: StateData<SM>
+  event: Extract<EventData<SM>>,
+  state: Extract<StateData<SM>>
 ) => Kind<
   C,
   {
-    event?: EventData<SM>;
-    state?: StateData<SM>;
+    event?: Extract<EventData<SM>>;
+    state?: Extract<StateData<SM>>;
   }
 >) => 1 as any;
 
@@ -133,6 +148,10 @@ type RenderStates<R extends URIS, SM extends StateMachine> = {
   ) => Kind<R, StateOutgoingEvent<S, SM>>;
 };
 
+/**
+ * @since 1.0.0
+ * @category Render
+ */
 export const createRender = <R extends URIS>() => <SM extends StateMachine>(
   stateMachine: SM,
   renderStates: RenderStates<R, SM>
@@ -153,19 +172,19 @@ export const tag = <Tag extends string, Data>(tag: Tag, data?: Data) => ({
   data,
 });
 
+/**
+ * ...
+ *
+ * @since 1.0.0
+ * @category Util
+ */
+export type Name = string | symbol | number;
+
 // ----------------------------------------------------------------------------
 // Internal
 // ----------------------------------------------------------------------------
 
-type UndefinedToEmptyTuple<T> = T extends undefined ? [] : T;
-
 type TupleToUnion<T extends any[]> = T[number];
-
-type TupleOrUndefinedToUnion<T extends any[] | undefined> = TupleToUnion<
-  UndefinedToEmptyTuple<T>
->;
-
-type Name = string | symbol | number;
 
 type Tuple<T> =
   | []
@@ -203,20 +222,36 @@ type Event<SM extends StateMachine> = keyof SM['events'];
 type StateOutgoingEvent<
   S extends State<SM>,
   SM extends StateMachine
-> = TupleOrUndefinedToUnion<SM['states'][S]['events']>;
+> = TupleToUnion<SM['states'][S]['events']>;
 
 type EventOutgoingEvent<
   E extends Event<SM>,
   SM extends StateMachine
-> = TupleOrUndefinedToUnion<SM['events'][E]['toEvents']>;
+> = TupleToUnion<SM['events'][E]['toEvents']>;
 
 type EventOutgoingState<
   E extends Event<SM>,
   SM extends StateMachine
-> = TupleOrUndefinedToUnion<SM['events'][E]['toStates']>;
+> = TupleToUnion<SM['events'][E]['toStates']>;
 
 type EventIncomingState<E extends Event<SM>, SM extends StateMachine> = Union<
   {
     [S in State<SM>]: StateOutgoingEvent<S, SM> extends E ? S : never;
   }
 >;
+
+type Extract<T> = T extends infer O ? { [K in keyof O]: O[K] } : never;
+
+type Normalize<T, A> = NormalizeUnknown<NormalizeUndefined<T, A>, A>;
+
+type NormalizeUndefined<T, A> = T extends undefined
+  ? undefined extends T
+    ? A
+    : T
+  : T;
+
+type NormalizeUnknown<T, A> = T extends unknown
+  ? unknown extends T
+    ? A
+    : T
+  : T;
