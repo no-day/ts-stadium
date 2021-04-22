@@ -56,7 +56,10 @@ const createEdgesFromStates = (
     A.chain(([from, { events }]) =>
       pipe(
         events as Name[],
-        A.map((to) => ({ from: (from as Name).toString(), to: to.toString() }))
+        A.map((to) => ({
+          from: (from as Name).toString(),
+          to: to.toString(),
+        }))
       )
     )
   );
@@ -70,7 +73,10 @@ const createEdgesFromEvents = (
     A.chain(([from, { toStates, toEvents }]) =>
       pipe(
         [...toStates, ...toEvents],
-        A.map((to) => ({ from: (from as Name).toString(), to: to.toString() }))
+        A.map((to) => ({
+          from: (from as Name).toString(),
+          to: to.toString(),
+        }))
       )
     )
   );
@@ -91,7 +97,7 @@ const createEdges = (
  *   import { createStateMachine } from 'fp-ts-library-template';
  *   import { createGraph } from 'fp-ts-library-template/graph';
  *
- *   const stateMachine = createStateMachine<StateMachine>()({
+ *   const stateMachine = createStateMachine({
  *     states: {
  *       On: { events: ['Toggle'] },
  *       Off: { events: ['Toggle'] },
