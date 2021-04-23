@@ -1,47 +1,61 @@
-import * as S from '../../../src';
-import * as T from 'fp-ts/Task';
-import * as I from 'fp-ts/IO';
+import * as SM from '../../../src';
 import * as React from 'react';
 import { ReactElement } from 'react';
 
-export const stateMachine = S.createStateMachine({
-  inits: ['On', 'Off'],
+export const stateMachine = SM.createStateMachine({
   states: {
-    On: { events: ['TurnOff', 'TurnOn'] },
-    Off: { events: ['TurnOn'] },
+    On: {
+      events: ['TurnOff', 'TurnOn'],
+      init: true,
+      data: SM.typeOf<string>(),
+    },
+    Off: {
+      events: ['TurnOn'],
+    },
   },
+
   events: {
-    TurnOn: { toStates: ['On'] },
-    TurnOff: { toStates: ['Off'] },
+    TurnOn: {
+      toStates: ['On', 'Off'],
+      data: SM.typeOf<boolean>(),
+    },
+    TurnOff: {
+      toStates: ['Off'],
+    },
   },
 });
 
-const control = S.createControl<'Promise'>()(stateMachine, {
-  TurnOn: async () => ({ state: S.tag('On') }),
-  TurnOff: async () => ({ state: S.tag('Off') }),
+const control = SM.createControl(stateMachine)<'Promise'>({
+  TurnOn: async () => (state) => ({
+    state: SM.tag('On', ''),
+  }),
+  TurnOff: async () => () => ({ state: SM.tag('Off') }),
 });
 
-const Render = S.createCallbackRender<ReactElement>()(stateMachine, {
+const Render = SM.createCbRender(stateMachine)<ReactElement>({
   On: () => (onEvent) => (
-    <div onClick={() => onEvent(S.tag('TurnOff'))}>Toggle</div>
+    <div onClick={() => onEvent(SM.tag('TurnOff'))}>Toggle</div>
   ),
   Off: () => (onEvent) => (
-    <div onClick={() => onEvent(S.tag('TurnOn'))}>Toggle</div>
+    <div onClick={() => onEvent(SM.tag('TurnOn', true))}>Toggle</div>
   ),
 });
 
 export const Compo = () => {
-  const [state, setState] = React.useState<S.StateData<typeof stateMachine>>(
-    S.tag('On')
+  const [state, setState] = React.useState(
+    SM.init(stateMachine, SM.tag('On', ''))
   );
 
-  <Render
-    state={state}
-    onEvent={(event) =>
-      control(event, state).then((n) => {
-        setState(n.state);
-        control(n.event, n.state);
-      })
-    }
-  />;
+  return (
+    <Render
+      state={state}
+      onEvent={(event) =>
+        control(event, state).then((nn) => {
+          const n = nn(state);
+          n.state && setState(n.state);
+          n.event && control(n.event, n.state || state);
+        })
+      }
+    />
+  );
 };

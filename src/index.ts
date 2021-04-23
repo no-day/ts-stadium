@@ -14,24 +14,25 @@ import * as R from 'fp-ts/Record';
  * @since 1.0.0
  * @category Constructors
  */
-export type StateMachine<SMS extends StateMachineSpec = StateMachineSpec> = {
+export interface StateMachine<SMS extends StateMachineSpec = StateMachineSpec> {
   readonly StateMachine: unique symbol;
 
   states: {
     [S in keyof SMS['states']]: {
-      data: Tagged<S, SMS['states'][S]['data']>;
+      data: Tagged<S, Normalize<SMS['states'][S]['data'], NoData>>;
       events: Normalize<SMS['states'][S]['events'], []>;
+      init: Normalize<SMS['states'][S]['init'], false>;
     };
   };
 
   events: {
     [E in keyof SMS['events']]: {
-      data: Tagged<E, SMS['events'][E]['data']>;
+      data: Tagged<E, Normalize<SMS['events'][E]['data'], NoData>>;
       toStates: Normalize<SMS['events'][E]['toStates'], []>;
       toEvents: Normalize<SMS['events'][E]['toEvents'], []>;
     };
   };
-};
+}
 
 // ----------------------------------------------------------------------------
 // Constructors
@@ -50,6 +51,7 @@ export type StateMachineSpec<S extends Name = Name, E extends Name = Name> = {
     {
       data?: any;
       events?: Tuple<E>;
+      init?: boolean;
     }
   >;
 
@@ -66,9 +68,10 @@ export type StateMachineSpec<S extends Name = Name, E extends Name = Name> = {
 const normailizeSMState = ({
   events = [],
   data,
+  init = false,
 }: RecordVal<StateMachineSpec['states']>): RecordVal<
   StateMachine['states']
-> => ({ data, events });
+> => ({ data, events, init });
 
 const normailizeSMEvent = ({
   data,
@@ -121,7 +124,9 @@ type ControlEvents<C extends URIS, SM extends StateMachine> = {
     state: SM['states'][EventIncomingState<E, SM>]['data']
   ) => Kind<
     C,
-    {
+    (
+      state: SM['states'][EventIncomingState<E, SM>]['data']
+    ) => {
       event?: SM['states'][EventOutgoingEvent<E, SM>]['data'];
       state?: SM['states'][EventOutgoingState<E, SM>]['data'];
     }
@@ -148,15 +153,18 @@ type ControlEvents<C extends URIS, SM extends StateMachine> = {
  *     Toggle: () => Promise.resolve(SM.tag('On')),
  *   });
  */
-export const createControl = <C extends URIS>() => <SM extends StateMachine>(
-  stateMachine: SM,
+export const createControl = <SM extends StateMachine>(stateMachine: SM) => <
+  C extends URIS
+>(
   controlEvents: ControlEvents<C, SM>
 ): ((
   event: Extract<EventData<SM>>,
   state: Extract<StateData<SM>>
 ) => Kind<
   C,
-  {
+  (
+    state: Extract<StateData<SM>>
+  ) => {
     event?: Extract<EventData<SM>>;
     state?: Extract<StateData<SM>>;
   }
@@ -183,12 +191,10 @@ type RenderStates2<R extends URIS2, B, SM extends StateMachine> = {
  * @category Render
  */
 export const createRender: {
-  <R extends URIS>(): <SM extends StateMachine>(
-    stateMachine: SM,
+  <SM extends StateMachine>(stateMachine: SM): <R extends URIS>(
     renderStates: RenderStates<R, SM>
   ) => (state: StateData<SM>) => Kind<R, EventData<SM>>;
-  <R extends URIS2, B>(): <SM extends StateMachine>(
-    stateMachine: SM,
+  <SM extends StateMachine>(stateMachine: SM): <R extends URIS2, B>(
     renderStates: RenderStates2<R, B, SM>
   ) => (state: StateData<SM>) => Kind2<R, B, EventData<SM>>;
 } = 1 as any;
@@ -212,17 +218,8 @@ declare module 'fp-ts/HKT' {
   }
 }
 
-type UncurryToOptions<K, F, O = {}> = F extends (x: infer A) => infer B
-  ? K extends [infer headK, ...infer tailK]
-    ? headK extends string
-      ? UncurryToOptions<tailK, B, O & Record<headK, A>>
-      : never
-    : (opts: Extract<O>) => F
-  : (opts: Extract<O>) => F;
-
-export const createCallbackRender: {
-  <B>(): <SM extends StateMachine>(
-    stateMachine: SM,
+export const createCbRender: {
+  <SM extends StateMachine>(stateMachine: SM): <B>(
     renderStates: RenderStates2<'CallbackEvent', B, SM>
   ) => (opts: {
     state: StateData<SM>;
@@ -240,10 +237,20 @@ export const createCallbackRender: {
  * @since 1.0.0
  * @category Util
  */
-export const tag = <Tag extends string, Data>(tag: Tag, data?: Data) => ({
+export const tag: {
+  <Tag extends string, Data>(tag: Tag, data: Data): Tagged<Tag, Data>;
+  <Tag extends string>(tag: Tag): Tagged<Tag, NoData>;
+} = (tag: any, data: any = null) => ({
   tag,
   data,
 });
+
+export const init = <SM extends StateMachine>(
+  stateMachine: SM,
+  initState: SM['states'][InitState<SM>]['data']
+): StateData<SM> => 1 as any;
+
+export const typeOf = <T>() => ({} as T);
 
 /**
  * ...
@@ -313,9 +320,17 @@ type EventIncomingState<E extends Event<SM>, SM extends StateMachine> = Union<
   }
 >;
 
+export type InitState<SM extends StateMachine> = Union<
+  {
+    [S in keyof SM['states']]: true extends SM['states'][S]['init'] ? S : never;
+  }
+>;
+
 type Extract<T> = T extends infer O ? { [K in keyof O]: O[K] } : never;
 
-type Normalize<T, A> = NormalizeUnknown<NormalizeUndefined<T, A>, A>;
+type Normalize<T, A> = IsAny<T> extends false
+  ? NormalizeUnknown<NormalizeUndefined<T, A>, A>
+  : T;
 
 type NormalizeUndefined<T, A> = T extends undefined
   ? undefined extends T
@@ -330,3 +345,7 @@ type NormalizeUnknown<T, A> = T extends unknown
   : T;
 
 type RecordVal<R> = R extends Record<infer K, infer V> ? V : never;
+
+export type IsAny<T> = 0 extends 1 & T ? true : false;
+
+type NoData = void;
