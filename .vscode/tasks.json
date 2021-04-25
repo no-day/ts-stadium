@@ -2,10 +2,13 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "build:watch",
+      "label": "ts-stadium build:watch",
       "runOptions": { "runOn": "folderOpen" },
       "type": "shell",
       "command": "yarn",
+      "options": {
+        "cwd": "packages/ts-stadium"
+      },
       "isBackground": true,
       "args": ["build:watch"],
       "group": "build",
@@ -17,10 +20,13 @@
       }
     },
     {
-      "label": "docs:watch",
+      "label": "ts-stadium docs:watch",
       "runOptions": { "runOn": "folderOpen" },
       "type": "shell",
       "command": "yarn",
+      "options": {
+        "cwd": "packages/ts-stadium"
+      },
       "isBackground": true,
       "args": ["docs:watch"],
       "group": "none",
@@ -32,10 +38,13 @@
       }
     },
     {
-      "label": "md:watch",
+      "label": "ts-stadium md:watch",
       "runOptions": { "runOn": "folderOpen" },
       "type": "shell",
       "command": "yarn",
+      "options": {
+        "cwd": "packages/ts-stadium"
+      },
       "isBackground": true,
       "args": ["md:watch"],
       "group": "none",
@@ -47,7 +56,7 @@
       }
     },
     {
-      "label": "docs-preview:watch",
+      "label": "ts-stadium docs-preview:watch",
       "runOptions": { "runOn": "folderOpen" },
       "type": "shell",
       "command": "yarn",
@@ -61,14 +70,18 @@
         "panel": "dedicated"
       },
       "options": {
-        "shell": { "args": ["-i"] }
+        "shell": { "args": ["-i"] },
+        "cwd": "packages/ts-stadium"
       }
     },
     {
-      "label": "test:watch",
+      "label": "ts-stadium test:watch",
       "runOptions": { "runOn": "folderOpen" },
       "type": "shell",
       "command": "yarn",
+      "options": {
+        "cwd": "packages/ts-stadium"
+      },
       "isBackground": true,
       "args": ["test:watch"],
       "group": "none",
@@ -80,12 +93,15 @@
       }
     },
     {
-      "label": "demo:watch",
+      "label": "ts-stadium-demo develop",
       "runOptions": { "runOn": "folderOpen" },
       "type": "shell",
       "command": "yarn",
+      "options": {
+        "cwd": "packages/ts-stadium-demo"
+      },
       "isBackground": true,
-      "args": ["demo:watch"],
+      "args": ["develop"],
       "group": "none",
       "presentation": {
         "reveal": "always",
@@ -94,5 +110,20 @@
         "panel": "dedicated"
       }
     }
+    // {
+    //   "label": "demo:watch",
+    //   "runOptions": { "runOn": "folderOpen" },
+    //   "type": "shell",
+    //   "command": "yarn",
+    //   "isBackground": true,
+    //   "args": ["demo:watch"],
+    //   "group": "none",
+    //   "presentation": {
+    //     "reveal": "always",
+    //     "echo": false,
+    //     "focus": false,
+    //     "panel": "dedicated"
+    //   }
+    // }
   ]
 }

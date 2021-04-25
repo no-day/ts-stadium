@@ -1,0 +1,44 @@
+---
+title: 'Toggle'
+date: 2019-10-25
+slug: '/toggle'
+canonicalUrl: 'https://random-blog-about-curses.com'
+---
+
+import { Code } from '../../components/code';
+import { Graph } from '../../components/graph';
+
+Hello
+
+import { srcs as toggleSrcs } from './srcs';
+import { stateMachine as toggleStateMachine } from './src/state-machine';
+import { Toggle } from './src';
+
+<Graph
+  stateMachine={toggleStateMachine}
+  graphAttrs={`
+    rankdir=LR
+    center=true
+    {rank=same; SwitchOff, SwitchOn }
+    {rank=min; On }
+    {rank=max; Off }
+  `}
+/>
+
+<Code {...toggleSrcs.stateMachine} />
+
+Bla
+
+<Code {...toggleSrcs.control} />
+
+bla
+
+<Code {...toggleSrcs.render} />
+
+bla
+
+<Code {...toggleSrcs.index} />
+
+bla
+
+<Toggle />

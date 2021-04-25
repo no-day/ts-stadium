@@ -1,0 +1,40 @@
+{
+  "name": "@no-day/ts-stadium",
+  "homepage": "https://github.com/no-day/fp-ts-library-template",
+  "version": "1.0.0-rc.1",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "license": "MIT",
+  "peerDependencies": {
+    "fp-ts": "^2.9.5"
+  },
+  "dependencies": {
+    "ts-graphviz": "^0.14.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.20",
+    "docs-ts": "^0.6.10",
+    "fast-check": "^2.13.0",
+    "jest": "^26.6.3",
+    "markdown-magic": "^2.0.0",
+    "prettier": "^2.2.1",
+    "prettier-plugin-jsdoc": "^0.3.13",
+    "ts-jest": "^26.5.3",
+    "typescript": "^4.2.3"
+  },
+  "scripts": {
+    "test": "yarn jest",
+    "test:watch": "yarn jest --watch",
+    "build": "yarn tsc",
+    "build:watch": "yarn tsc --watch",
+    "docs": "yarn docs-ts",
+    "docs:watch": "while inotifywait -e close_write src; do yarn docs; done",
+    "md": "yarn markdown --config markdown.config.js",
+    "md:watch": "while inotifywait -e close_write README.md; do yarn md; done",
+    "docs-preview:watch": "cd docs; bundle exec jekyll serve --livereload",
+    "docs-preview": "cd docs; bundle exec jekyll serve",
+    "demo:build": "cd demo; yarn install; yarn build; cp -r public ../docs/demo",
+    "demo:watch": "cd demo; yarn gatsby develop;",
+    "prepublish": "yarn build"
+  }
+}
