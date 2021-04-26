@@ -1,7 +1,7 @@
 import stateMachine from '!!raw-loader!./src/state-machine.ts';
 import control from '!!raw-loader!./src/control.ts';
 import render from '!!raw-loader!./src/render.tsx';
-import index from '!!raw-loader!./src/index.tsx';
+import toggle from '!!raw-loader!./src/toggle.tsx';
 
 export const srcs = {
   stateMachine: {
@@ -16,8 +16,8 @@ export const srcs = {
     fileName: 'toggle/src/render.tsx',
     source: render,
   },
-  index: {
-    fileName: 'toggle/src/index.tsx',
-    source: index,
+  toggle: {
+    fileName: 'toggle/src/toggle.tsx',
+    source: toggle,
   },
 };

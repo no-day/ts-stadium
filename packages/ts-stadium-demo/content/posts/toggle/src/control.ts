@@ -1,8 +1,7 @@
-import * as SM from '@no-day/ts-stadium';
-import * as React from 'react';
-import { stateMachine } from './state-machine';
 import * as T from 'fp-ts/Task';
-import { URItoKind } from 'fp-ts/HKT';
+import * as SM from '@no-day/ts-stadium';
+
+import { stateMachine } from './state-machine';
 
 export const control = SM.createControl(stateMachine)(T.task)({
   SwitchOn: () => async () => () => ({

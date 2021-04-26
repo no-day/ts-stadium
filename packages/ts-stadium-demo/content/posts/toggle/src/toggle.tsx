@@ -1,8 +1,8 @@
-import * as SM from '@no-day/ts-stadium';
 import * as React from 'react';
+import * as SM from '@no-day/ts-stadium';
+
 import { stateMachine } from './state-machine';
 import { Render } from './render';
-import { control } from './control';
 
 export const Toggle = () => {
   const [state, setState] = React.useState(

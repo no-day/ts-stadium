@@ -5,6 +5,8 @@ slug: '/toggle'
 canonicalUrl: 'https://random-blog-about-curses.com'
 ---
 
+import './style.css';
+
 import { Code } from '../../components/code';
 import { Graph } from '../../components/graph';
 
@@ -12,18 +14,10 @@ Hello
 
 import { srcs as toggleSrcs } from './srcs';
 import { stateMachine as toggleStateMachine } from './src/state-machine';
-import { Toggle } from './src';
+import { Toggle } from './src/toggle';
+import { SplitDemo } from './src/split-demo';
 
-<Graph
-  stateMachine={toggleStateMachine}
-  graphAttrs={`
-    rankdir=LR
-    center=true
-    {rank=same; SwitchOff, SwitchOn }
-    {rank=min; On }
-    {rank=max; Off }
-  `}
-/>
+<SplitDemo />
 
 <Code {...toggleSrcs.stateMachine} />
 
@@ -37,8 +31,4 @@ bla
 
 bla
 
-<Code {...toggleSrcs.index} />
-
-bla
-
-<Toggle />
+<Code {...toggleSrcs.toggle} />

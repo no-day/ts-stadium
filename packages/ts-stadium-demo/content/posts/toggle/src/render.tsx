@@ -1,13 +1,21 @@
 import * as SM from '@no-day/ts-stadium';
-import * as React from 'react';
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
+
+import IconOff from './assets/switch-off.svg';
+import IconOn from './assets/switch-on.svg';
 import { stateMachine } from './state-machine';
 
 export const Render = SM.createCbRender(stateMachine)<ReactElement>({
   On: () => (onEvent) => (
-    <div onClick={() => onEvent(SM.tag('SwitchOff'))}>On</div>
+    <div onClick={() => onEvent(SM.tag('SwitchOff'))}>
+      <IconOn />
+      On
+    </div>
   ),
   Off: () => (onEvent) => (
-    <div onClick={() => onEvent(SM.tag('SwitchOn'))}>Off</div>
+    <div onClick={() => onEvent(SM.tag('SwitchOn'))}>
+      <IconOff />
+      Off
+    </div>
   ),
 });
