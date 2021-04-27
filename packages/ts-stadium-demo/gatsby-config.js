@@ -5,8 +5,10 @@ require(`dotenv`).config({
 const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE;
 
 module.exports = {
+  pathPrefix: 'ts-stadium',
   siteMetadata: {
-    siteTitleAlt: `Minimal Blog - Gatsby Theme`,
+    siteTitle: `ts-stadium`,
+    siteTitleAlt: `ts-stadium demos`,
   },
   plugins: [
     {
@@ -21,24 +23,17 @@ module.exports = {
       resolve: `@lekoarts/gatsby-theme-minimal-blog`,
       // See the theme's README for all available options
       options: {
+        title: 'Foo',
         navigation: [
           {
             title: `Blog`,
             slug: `/blog`,
           },
-          {
-            title: `About`,
-            slug: `/about`,
-          },
         ],
         externalLinks: [
           {
-            name: `Twitter`,
-            url: `https://twitter.com/lekoarts_de`,
-          },
-          {
-            name: `Instagram`,
-            url: `https://www.instagram.com/lekoarts.de/`,
+            name: `Github`,
+            url: `https://github.com/no-day/ts-stadium`,
           },
         ],
       },
