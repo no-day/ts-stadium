@@ -7,15 +7,21 @@ import { stateMachine } from './state-machine';
 
 export const Render = SM.createCbRender(stateMachine)<ReactElement>({
   On: () => (onEvent) => (
-    <div onClick={() => onEvent(SM.tag('SwitchOff'))}>
+    <span
+      style={{ width: '100px', cursor: 'pointer' }}
+      onClick={() => onEvent(SM.tag('SwitchOff'))}
+      title="Click to switch off"
+    >
       <IconOn />
-      On
-    </div>
+    </span>
   ),
   Off: () => (onEvent) => (
-    <div onClick={() => onEvent(SM.tag('SwitchOn'))}>
+    <span
+      style={{ width: '100px', cursor: 'pointer' }}
+      onClick={() => onEvent(SM.tag('SwitchOn'))}
+      title="Click to switch off"
+    >
       <IconOff />
-      Off
-    </div>
+    </span>
   ),
 });

@@ -4,15 +4,28 @@ import styled from '@emotion/styled';
 const Root = styled.div`
   display: flex;
   width: 100%;
-  flex-direction: row;
+  background-color: rgb(40, 42, 54);
+
+  flex-direction: column;
+  @media (min-width: 600px) {
+    flex-direction: row;
+  }
 `;
 
-const Panel = styled.div`
-  border: 1px solid black;
+const PanelLeft = styled.div`
+  //border: 1px solid grey;
+  flex: 1 1 0px;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+`;
+
+const PanelRight = styled.div`
   flex: 1 1 0px;
   display: grid;
   //justify-items: center;
   align-items: center;
+  padding: 20px;
 `;
 
 export const Split = ({
@@ -21,7 +34,7 @@ export const Split = ({
   children: [any, any];
 }) => (
   <Root>
-    <Panel>{left}</Panel>
-    <Panel>{right}</Panel>
+    <PanelLeft>{left}</PanelLeft>
+    <PanelRight>{right}</PanelRight>
   </Root>
 );

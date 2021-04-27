@@ -7,7 +7,7 @@ import { tag } from './types';
 import chroma from 'chroma-js';
 
 const colors = {
-  background: pipe(chroma('#353535'), (color) => ({
+  background: pipe(chroma('#353535').alpha(0.0), (color) => ({
     light: color,
     dark: color,
   })),
