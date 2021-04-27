@@ -1,0 +1,9 @@
+@media (min-width: 610px) {
+  html {
+    font-size: 14px;
+  }
+
+  pre * {
+    font-size: 1rem;
+  }
+}
