@@ -3,19 +3,6 @@ import * as React from 'react';
 import * as T from 'fp-ts/Task';
 import { URItoKind } from 'fp-ts/HKT';
 
-const stateMachine = $.createStateMachine({
-  states: { On: {}, Off: {} },
-  events: { SwitchOn: { toStates: ['On'] } },
-});
-
-const control = $.createControl(stateMachine)<T.URI>(T.task)({
-  SwitchOn: (st) => async () => (st2) => ({
-    state: $.tag('On'),
-  }),
-});
-
-type T = URItoKind<'Taskss'>;
-
 describe('index', () => {
   describe('createStateMachine', () => {
     it('works for empty states and events', () => {
@@ -41,6 +28,7 @@ describe('index', () => {
           Unit: {
             data: undefined,
             events: [],
+            init: false,
           },
         },
         events: {},
@@ -58,6 +46,7 @@ describe('index', () => {
           Unit: {
             data: undefined,
             events: [],
+            init: false,
           },
         },
         events: {
@@ -84,10 +73,12 @@ describe('index', () => {
           On: {
             data: undefined,
             events: [],
+            init: false,
           },
           Off: {
             data: undefined,
             events: [],
+            init: false,
           },
         },
         events: {
