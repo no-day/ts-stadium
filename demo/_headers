@@ -5,13 +5,13 @@
   X-XSS-Protection: 1; mode=block
   X-Content-Type-Options: nosniff
   Referrer-Policy: same-origin
-/styles.3202f12e77110dbe70e5.css
+/styles.428fd66faedd4d0dd72a.css
   Cache-Control: public, max-age=31536000, immutable
 /styles-407fe62976dc5310c43e.js
   Cache-Control: public, max-age=31536000, immutable
 /a75e6e4d1b7feebda3ca1479eef2fbcc6776bb12-77696e97c139900c5739.js
   Cache-Control: public, max-age=31536000, immutable
-/component---node-modules-lekoarts-gatsby-theme-minimal-blog-core-src-templates-homepage-query-tsx-8de14b301b625e5a7233.js
+/component---node-modules-lekoarts-gatsby-theme-minimal-blog-core-src-templates-homepage-query-tsx-67b9db04653a37d4bb2e.js
   Cache-Control: public, max-age=31536000, immutable
 /component---node-modules-lekoarts-gatsby-theme-minimal-blog-core-src-templates-blog-query-tsx-b23e42cd8bf2479924a4.js
   Cache-Control: public, max-age=31536000, immutable
@@ -23,79 +23,79 @@
   Cache-Control: public, max-age=31536000, immutable
 /component---cache-caches-gatsby-plugin-offline-app-shell-js-14cb3423ad297ca49760.js
   Cache-Control: public, max-age=31536000, immutable
-/webpack-runtime-2888eddea19e1298af17.js
+/webpack-runtime-29928f35968b210bc2b9.js
   Cache-Control: public, max-age=31536000, immutable
 /framework-5be6080fe96856d37dff.js
   Cache-Control: public, max-age=31536000, immutable
 /ceb0f029-84c699d74f1b782c2a79.js
   Cache-Control: public, max-age=31536000, immutable
-/app-6dec92a29f4a7cf2113b.js
+/app-d669db9313ccc8e761af.js
   Cache-Control: public, max-age=31536000, immutable
 /static/*
   Cache-Control: public, max-age=31536000, immutable
 /sw.js
   Cache-Control: no-cache
-/
-  Link: </webpack-runtime-2888eddea19e1298af17.js>; rel=preload; as=script
-  Link: </styles-407fe62976dc5310c43e.js>; rel=preload; as=script
-  Link: </framework-5be6080fe96856d37dff.js>; rel=preload; as=script
-  Link: </ceb0f029-84c699d74f1b782c2a79.js>; rel=preload; as=script
-  Link: </app-6dec92a29f4a7cf2113b.js>; rel=preload; as=script
-  Link: </styles-407fe62976dc5310c43e.js>; rel=preload; as=script
-  Link: </a75e6e4d1b7feebda3ca1479eef2fbcc6776bb12-77696e97c139900c5739.js>; rel=preload; as=script
-  Link: </component---node-modules-lekoarts-gatsby-theme-minimal-blog-core-src-templates-homepage-query-tsx-8de14b301b625e5a7233.js>; rel=preload; as=script
-  Link: </page-data/app-data.json>; rel=preload; as=fetch; crossorigin
-  Link: </page-data/index/page-data.json>; rel=preload; as=fetch; crossorigin
-/blog
-  Link: </webpack-runtime-2888eddea19e1298af17.js>; rel=preload; as=script
-  Link: </styles-407fe62976dc5310c43e.js>; rel=preload; as=script
-  Link: </framework-5be6080fe96856d37dff.js>; rel=preload; as=script
-  Link: </ceb0f029-84c699d74f1b782c2a79.js>; rel=preload; as=script
-  Link: </app-6dec92a29f4a7cf2113b.js>; rel=preload; as=script
-  Link: </styles-407fe62976dc5310c43e.js>; rel=preload; as=script
-  Link: </a75e6e4d1b7feebda3ca1479eef2fbcc6776bb12-77696e97c139900c5739.js>; rel=preload; as=script
-  Link: </component---node-modules-lekoarts-gatsby-theme-minimal-blog-core-src-templates-blog-query-tsx-b23e42cd8bf2479924a4.js>; rel=preload; as=script
-  Link: </page-data/app-data.json>; rel=preload; as=fetch; crossorigin
-  Link: </page-data/blog/page-data.json>; rel=preload; as=fetch; crossorigin
-/tags
-  Link: </webpack-runtime-2888eddea19e1298af17.js>; rel=preload; as=script
-  Link: </styles-407fe62976dc5310c43e.js>; rel=preload; as=script
-  Link: </framework-5be6080fe96856d37dff.js>; rel=preload; as=script
-  Link: </ceb0f029-84c699d74f1b782c2a79.js>; rel=preload; as=script
-  Link: </app-6dec92a29f4a7cf2113b.js>; rel=preload; as=script
-  Link: </styles-407fe62976dc5310c43e.js>; rel=preload; as=script
-  Link: </a75e6e4d1b7feebda3ca1479eef2fbcc6776bb12-77696e97c139900c5739.js>; rel=preload; as=script
-  Link: </component---node-modules-lekoarts-gatsby-theme-minimal-blog-core-src-templates-tags-query-tsx-e15ce34eb9a58f6f728f.js>; rel=preload; as=script
-  Link: </page-data/app-data.json>; rel=preload; as=fetch; crossorigin
-  Link: </page-data/tags/page-data.json>; rel=preload; as=fetch; crossorigin
-/toggle
-  Link: </webpack-runtime-2888eddea19e1298af17.js>; rel=preload; as=script
-  Link: </styles-407fe62976dc5310c43e.js>; rel=preload; as=script
-  Link: </framework-5be6080fe96856d37dff.js>; rel=preload; as=script
-  Link: </ceb0f029-84c699d74f1b782c2a79.js>; rel=preload; as=script
-  Link: </app-6dec92a29f4a7cf2113b.js>; rel=preload; as=script
-  Link: </styles-407fe62976dc5310c43e.js>; rel=preload; as=script
-  Link: </a75e6e4d1b7feebda3ca1479eef2fbcc6776bb12-77696e97c139900c5739.js>; rel=preload; as=script
-  Link: </component---node-modules-lekoarts-gatsby-theme-minimal-blog-core-src-templates-post-query-tsx-f0b5faad2372c02aed16.js>; rel=preload; as=script
-  Link: </page-data/app-data.json>; rel=preload; as=fetch; crossorigin
-  Link: </page-data/toggle/page-data.json>; rel=preload; as=fetch; crossorigin
-/about
-  Link: </webpack-runtime-2888eddea19e1298af17.js>; rel=preload; as=script
-  Link: </styles-407fe62976dc5310c43e.js>; rel=preload; as=script
-  Link: </framework-5be6080fe96856d37dff.js>; rel=preload; as=script
-  Link: </ceb0f029-84c699d74f1b782c2a79.js>; rel=preload; as=script
-  Link: </app-6dec92a29f4a7cf2113b.js>; rel=preload; as=script
-  Link: </styles-407fe62976dc5310c43e.js>; rel=preload; as=script
-  Link: </a75e6e4d1b7feebda3ca1479eef2fbcc6776bb12-77696e97c139900c5739.js>; rel=preload; as=script
-  Link: </component---node-modules-lekoarts-gatsby-theme-minimal-blog-core-src-templates-page-query-tsx-e058663e6c58fb8cc5a1.js>; rel=preload; as=script
-  Link: </page-data/app-data.json>; rel=preload; as=fetch; crossorigin
-  Link: </page-data/about/page-data.json>; rel=preload; as=fetch; crossorigin
-/offline-plugin-app-shell-fallback/
-  Link: </webpack-runtime-2888eddea19e1298af17.js>; rel=preload; as=script
-  Link: </styles-407fe62976dc5310c43e.js>; rel=preload; as=script
-  Link: </framework-5be6080fe96856d37dff.js>; rel=preload; as=script
-  Link: </ceb0f029-84c699d74f1b782c2a79.js>; rel=preload; as=script
-  Link: </app-6dec92a29f4a7cf2113b.js>; rel=preload; as=script
-  Link: </component---cache-caches-gatsby-plugin-offline-app-shell-js-14cb3423ad297ca49760.js>; rel=preload; as=script
-  Link: </page-data/app-data.json>; rel=preload; as=fetch; crossorigin
-  Link: </page-data/offline-plugin-app-shell-fallback/page-data.json>; rel=preload; as=fetch; crossorigin
+/ts-stadium/
+  Link: </ts-stadium/webpack-runtime-29928f35968b210bc2b9.js>; rel=preload; as=script
+  Link: </ts-stadium/styles-407fe62976dc5310c43e.js>; rel=preload; as=script
+  Link: </ts-stadium/framework-5be6080fe96856d37dff.js>; rel=preload; as=script
+  Link: </ts-stadium/ceb0f029-84c699d74f1b782c2a79.js>; rel=preload; as=script
+  Link: </ts-stadium/app-d669db9313ccc8e761af.js>; rel=preload; as=script
+  Link: </ts-stadium/styles-407fe62976dc5310c43e.js>; rel=preload; as=script
+  Link: </ts-stadium/a75e6e4d1b7feebda3ca1479eef2fbcc6776bb12-77696e97c139900c5739.js>; rel=preload; as=script
+  Link: </ts-stadium/component---node-modules-lekoarts-gatsby-theme-minimal-blog-core-src-templates-homepage-query-tsx-67b9db04653a37d4bb2e.js>; rel=preload; as=script
+  Link: </ts-stadium/page-data/app-data.json>; rel=preload; as=fetch; crossorigin
+  Link: </ts-stadium/page-data/index/page-data.json>; rel=preload; as=fetch; crossorigin
+/ts-stadium/blog
+  Link: </ts-stadium/webpack-runtime-29928f35968b210bc2b9.js>; rel=preload; as=script
+  Link: </ts-stadium/styles-407fe62976dc5310c43e.js>; rel=preload; as=script
+  Link: </ts-stadium/framework-5be6080fe96856d37dff.js>; rel=preload; as=script
+  Link: </ts-stadium/ceb0f029-84c699d74f1b782c2a79.js>; rel=preload; as=script
+  Link: </ts-stadium/app-d669db9313ccc8e761af.js>; rel=preload; as=script
+  Link: </ts-stadium/styles-407fe62976dc5310c43e.js>; rel=preload; as=script
+  Link: </ts-stadium/a75e6e4d1b7feebda3ca1479eef2fbcc6776bb12-77696e97c139900c5739.js>; rel=preload; as=script
+  Link: </ts-stadium/component---node-modules-lekoarts-gatsby-theme-minimal-blog-core-src-templates-blog-query-tsx-b23e42cd8bf2479924a4.js>; rel=preload; as=script
+  Link: </ts-stadium/page-data/app-data.json>; rel=preload; as=fetch; crossorigin
+  Link: </ts-stadium/page-data/blog/page-data.json>; rel=preload; as=fetch; crossorigin
+/ts-stadium/tags
+  Link: </ts-stadium/webpack-runtime-29928f35968b210bc2b9.js>; rel=preload; as=script
+  Link: </ts-stadium/styles-407fe62976dc5310c43e.js>; rel=preload; as=script
+  Link: </ts-stadium/framework-5be6080fe96856d37dff.js>; rel=preload; as=script
+  Link: </ts-stadium/ceb0f029-84c699d74f1b782c2a79.js>; rel=preload; as=script
+  Link: </ts-stadium/app-d669db9313ccc8e761af.js>; rel=preload; as=script
+  Link: </ts-stadium/styles-407fe62976dc5310c43e.js>; rel=preload; as=script
+  Link: </ts-stadium/a75e6e4d1b7feebda3ca1479eef2fbcc6776bb12-77696e97c139900c5739.js>; rel=preload; as=script
+  Link: </ts-stadium/component---node-modules-lekoarts-gatsby-theme-minimal-blog-core-src-templates-tags-query-tsx-e15ce34eb9a58f6f728f.js>; rel=preload; as=script
+  Link: </ts-stadium/page-data/app-data.json>; rel=preload; as=fetch; crossorigin
+  Link: </ts-stadium/page-data/tags/page-data.json>; rel=preload; as=fetch; crossorigin
+/ts-stadium/toggle
+  Link: </ts-stadium/webpack-runtime-29928f35968b210bc2b9.js>; rel=preload; as=script
+  Link: </ts-stadium/styles-407fe62976dc5310c43e.js>; rel=preload; as=script
+  Link: </ts-stadium/framework-5be6080fe96856d37dff.js>; rel=preload; as=script
+  Link: </ts-stadium/ceb0f029-84c699d74f1b782c2a79.js>; rel=preload; as=script
+  Link: </ts-stadium/app-d669db9313ccc8e761af.js>; rel=preload; as=script
+  Link: </ts-stadium/styles-407fe62976dc5310c43e.js>; rel=preload; as=script
+  Link: </ts-stadium/a75e6e4d1b7feebda3ca1479eef2fbcc6776bb12-77696e97c139900c5739.js>; rel=preload; as=script
+  Link: </ts-stadium/component---node-modules-lekoarts-gatsby-theme-minimal-blog-core-src-templates-post-query-tsx-f0b5faad2372c02aed16.js>; rel=preload; as=script
+  Link: </ts-stadium/page-data/app-data.json>; rel=preload; as=fetch; crossorigin
+  Link: </ts-stadium/page-data/toggle/page-data.json>; rel=preload; as=fetch; crossorigin
+/ts-stadium/about
+  Link: </ts-stadium/webpack-runtime-29928f35968b210bc2b9.js>; rel=preload; as=script
+  Link: </ts-stadium/styles-407fe62976dc5310c43e.js>; rel=preload; as=script
+  Link: </ts-stadium/framework-5be6080fe96856d37dff.js>; rel=preload; as=script
+  Link: </ts-stadium/ceb0f029-84c699d74f1b782c2a79.js>; rel=preload; as=script
+  Link: </ts-stadium/app-d669db9313ccc8e761af.js>; rel=preload; as=script
+  Link: </ts-stadium/styles-407fe62976dc5310c43e.js>; rel=preload; as=script
+  Link: </ts-stadium/a75e6e4d1b7feebda3ca1479eef2fbcc6776bb12-77696e97c139900c5739.js>; rel=preload; as=script
+  Link: </ts-stadium/component---node-modules-lekoarts-gatsby-theme-minimal-blog-core-src-templates-page-query-tsx-e058663e6c58fb8cc5a1.js>; rel=preload; as=script
+  Link: </ts-stadium/page-data/app-data.json>; rel=preload; as=fetch; crossorigin
+  Link: </ts-stadium/page-data/about/page-data.json>; rel=preload; as=fetch; crossorigin
+/ts-stadium/offline-plugin-app-shell-fallback/
+  Link: </ts-stadium/webpack-runtime-29928f35968b210bc2b9.js>; rel=preload; as=script
+  Link: </ts-stadium/styles-407fe62976dc5310c43e.js>; rel=preload; as=script
+  Link: </ts-stadium/framework-5be6080fe96856d37dff.js>; rel=preload; as=script
+  Link: </ts-stadium/ceb0f029-84c699d74f1b782c2a79.js>; rel=preload; as=script
+  Link: </ts-stadium/app-d669db9313ccc8e761af.js>; rel=preload; as=script
+  Link: </ts-stadium/component---cache-caches-gatsby-plugin-offline-app-shell-js-14cb3423ad297ca49760.js>; rel=preload; as=script
+  Link: </ts-stadium/page-data/app-data.json>; rel=preload; as=fetch; crossorigin
+  Link: </ts-stadium/page-data/offline-plugin-app-shell-fallback/page-data.json>; rel=preload; as=fetch; crossorigin
