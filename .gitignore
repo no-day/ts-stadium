@@ -1,8 +1,8 @@
 node_modules/
 dist/
-docs/modules/*.ts.md
-docs/demo/
-docs/examples/
-docs/_site
+**/docs/modules/*.ts.md
+**/docs/examples/
+**/docs/_site
+public/demo/
 yarn-error.log
 Gemfile.lock

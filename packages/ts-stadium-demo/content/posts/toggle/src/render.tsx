@@ -10,7 +10,7 @@ export const Render = SM.createCbRender(stateMachine)<ReactElement>({
     <span
       style={{ width: '100px', cursor: 'pointer' }}
       onClick={() => onEvent(SM.tag('SwitchOff'))}
-      title="Click to switch off"
+      title="Click to switch OFF"
     >
       <IconOn />
     </span>
@@ -19,7 +19,7 @@ export const Render = SM.createCbRender(stateMachine)<ReactElement>({
     <span
       style={{ width: '100px', cursor: 'pointer' }}
       onClick={() => onEvent(SM.tag('SwitchOn'))}
-      title="Click to switch off"
+      title="Click to switch ON"
     >
       <IconOff />
     </span>

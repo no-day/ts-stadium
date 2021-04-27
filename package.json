@@ -1,16 +1,17 @@
 {
   "private": "true",
   "workspaces": [
-    "packages/ts-stadium",
-    "packages/ts-stadium-demo"
+    "packages/*"
   ],
   "scripts": {
     "build": "yarn workspace @no-day/ts-stadium build; yarn workspace @no-day/ts-stadium-demo build",
     "test": "yarn workspace @no-day/ts-stadium test",
-    "docs": "yarn workspace @no-day/ts-stadium docs",
-    "demo": "yarn workspace @no-day/ts-stadium-demo build --prefix-paths; cp -r packages/ts-stadium-demo/public docs/demo"
+    "public": "bash scripts/public.sh"
   },
   "dependencies": {
     "fp-ts": "^2.9.5"
+  },
+  "devDependencies": {
+    "docs-ts": "^0.6.10"
   }
 }
