@@ -14,6 +14,6 @@ Write typesafe statemachines and get them visualized.
 
 ## Demo
 
-[API Docs](https://no-day.github.io/ts-stadium/demo)
+[Blog with Demos](https://no-day.github.io/ts-stadium/demo)
 
 ## Features
