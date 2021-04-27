@@ -5,7 +5,7 @@
     "packages/ts-stadium-demo"
   ],
   "scripts": {
-    "build": "yarn workspace @no-day/ts-stadium build; yarn workspace ts-stadium-demo build",
+    "build": "yarn workspace @no-day/ts-stadium build; yarn workspace @no-day/ts-stadium-demo build",
     "test": "yarn workspace @no-day/ts-stadium test",
     "docs": "yarn workspace @no-day/ts-stadium docs"
   },
