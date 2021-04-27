@@ -4,5 +4,6 @@ dist/
 **/docs/examples/
 **/docs/_site
 public/demo/
+public/
 yarn-error.log
 Gemfile.lock
