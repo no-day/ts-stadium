@@ -15,4 +15,4 @@ cp docs/_config.yml public
 
 yarn workspace @no-day/ts-stadium-demo build
 
-cp -r packages/ts-stadium-demo public/demo
+cp -r packages/ts-stadium-demo/public public/demo

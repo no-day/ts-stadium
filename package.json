@@ -12,6 +12,8 @@
     "fp-ts": "^2.9.5"
   },
   "devDependencies": {
-    "docs-ts": "^0.6.10"
-  }
+    "docs-ts": "^0.6.10",
+    "lerna": "^4.0.0"
+  },
+  "name": "ts-stadium"
 }
