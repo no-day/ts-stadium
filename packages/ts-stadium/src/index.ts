@@ -6,6 +6,7 @@ import * as R from 'fp-ts/Record';
 import * as A from 'fp-ts/Array';
 import { eqStrict } from 'fp-ts/lib/Eq';
 import { Monad1 } from 'fp-ts/lib/Monad';
+import { NoData, Tagged, Union } from './types';
 
 // ----------------------------------------------------------------------------
 // Model
@@ -256,20 +257,6 @@ export const createEventHandler = (control: any) => (st: [any, any]) => (
  * @since 1.0.0
  * @category Util
  */
-export const tag: {
-  <Tag extends string, Data>(tag: Tag, data: Data): Tagged<Tag, Data>;
-  <Tag extends string>(tag: Tag): Tagged<Tag, NoData>;
-} = (tag: any, data: any = null) => ({
-  tag,
-  data,
-});
-
-/**
- * ...
- *
- * @since 1.0.0
- * @category Util
- */
 export const init = <SM extends StateMachine>(
   stateMachine: SM,
   initState: SM['states'][InitState<SM>]['data']
@@ -327,6 +314,8 @@ export type InitState<SM extends StateMachine> = Union<
   }
 >;
 
+export { tag } from './types';
+
 // ----------------------------------------------------------------------------
 // Internal
 // ----------------------------------------------------------------------------
@@ -345,10 +334,6 @@ type Tuple<T> =
   | [T, T, T, T, T, T, T, T]
   | [T, T, T, T, T, T, T, T, T]
   | [T, T, T, T, T, T, T, T, T, T];
-
-type Tagged<T, D> = { tag: T; data: D };
-
-type Union<T> = T[keyof T];
 
 type State<SM extends StateMachine> = keyof SM['states'];
 
@@ -396,8 +381,6 @@ type NormalizeUnknown<T, A> = T extends unknown
 type RecordVal<R> = R extends Record<infer K, infer V> ? V : never;
 
 type IsAny<T> = 0 extends 1 & T ? true : false;
-
-type NoData = void;
 
 type GetNext<SM extends StateMachine> = (
   state: StateData<SM>

@@ -1,8 +1,9 @@
 /** @since 1.0.0 */
 
 import * as Graphviz from 'ts-graphviz';
-import { StateMachineGraph } from './graph';
+import { StateMachineGraph, Node, Edge } from './graph';
 import { pipe } from 'fp-ts/function';
+import { tag } from './types';
 
 // -----------------------------------------------------------------------------
 // Model
@@ -20,6 +21,36 @@ export type Dot = string & { readonly Dot: unique symbol };
 // Constructor
 // -----------------------------------------------------------------------------
 
+const mkNode = (graph: Graphviz.Digraph) => (
+  node: Node
+): Graphviz.NodeAttributes => {
+  switch (node.tag) {
+    case 'State':
+      return {
+        shape: 'box',
+        style: 'rounded, filled',
+        fillcolor: '#82E0AA',
+        penwidth: '1',
+        ...(node.data.isInit ? { penwidth: '2' } : {}),
+      };
+    case 'Event':
+      return {
+        shape: 'box',
+        style: 'filled',
+        fillcolor: '#F6DDCC',
+        height: 0.2,
+      };
+  }
+};
+
+const mkEdge = (graph: Graphviz.Digraph) => (
+  edge: Edge
+): Graphviz.EdgeAttributes =>
+  ({
+    FromState: () => ({}),
+    FromEvent: () => ({}),
+  }[edge.tag]());
+
 /**
  * Renders a state machine graph to a dot file
  *
@@ -29,26 +60,11 @@ export type Dot = string & { readonly Dot: unique symbol };
 export const renderDot = (graph: StateMachineGraph): Dot => {
   const g = Graphviz.digraph();
 
-  graph.nodes.forEach((node) =>
-    g.createNode(
-      node.id,
-      {
-        State: {
-          shape: 'box',
-          style: 'rounded, filled',
-          fillcolor: '#82E0AA',
-        },
-        Event: {
-          shape: 'box',
-          style: 'filled',
-          fillcolor: '#F6DDCC',
-          height: 0.2,
-        },
-      }[node.tag]
-    )
-  );
+  graph.nodes.forEach((node) => g.createNode(node.data.id, mkNode(g)(node)));
 
-  graph.edges.forEach((edge) => g.createEdge([edge.from, edge.to]));
+  graph.edges.forEach((edge) =>
+    g.createEdge([edge.data.from, edge.data.to], mkEdge(g)(edge))
+  );
 
   return pipe(g, Graphviz.toDot, unsafeMkDot);
 };

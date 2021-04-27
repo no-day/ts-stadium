@@ -6,10 +6,40 @@ import * as A from 'fp-ts/Array';
 import { pipe } from 'fp-ts/function';
 import { StateMachine, StateMachineSpec, Name } from '.';
 import * as S from 'fp-ts/Semigroup';
+import { tag, Tagged, Union } from './types';
 
 // --------------------------------------------------------------------------------------------------------------------
 // Model
 // --------------------------------------------------------------------------------------------------------------------
+
+type NodeCommon = {
+  id: string;
+};
+
+type Node_ = {
+  State: NodeCommon & {
+    isSelected: boolean;
+    isInit: boolean;
+  };
+  Event: NodeCommon & {
+    isReachable: boolean;
+  };
+};
+
+export type Node = TaggedUnion<Node_>;
+
+type EdgeCommon = {
+  from: string;
+  to: string;
+  isReachable: boolean;
+};
+
+type Edge_ = {
+  FromState: EdgeCommon;
+  FromEvent: EdgeCommon;
+};
+
+export type Edge = TaggedUnion<Edge_>;
 
 /**
  * Graph representation of a state machine
@@ -18,14 +48,8 @@ import * as S from 'fp-ts/Semigroup';
  * @category Model
  */
 export type StateMachineGraph = {
-  nodes: Array<{
-    tag: 'Event' | 'State';
-    id: string;
-  }>;
-  edges: Array<{
-    from: string;
-    to: string;
-  }>;
+  nodes: Array<Node>;
+  edges: Array<Edge>;
 };
 
 // --------------------------------------------------------------------------------------------------------------------
@@ -37,13 +61,23 @@ const createNodes = (
 ): StateMachineGraph['nodes'] => [
   ...pipe(
     stateMachine.states,
-    R.keys,
-    A.map((id) => ({ tag: 'State' as const, id }))
+    R.collect((id, node) =>
+      tag('State', {
+        isSelected: false,
+        isInit: node.init,
+        id,
+      })
+    )
   ),
   ...pipe(
     stateMachine.events,
     R.keys,
-    A.map((id) => ({ tag: 'Event' as const, id }))
+    A.map((id) =>
+      tag('Event', {
+        isReachable: true,
+        id,
+      })
+    )
   ),
 ];
 
@@ -56,10 +90,13 @@ const createEdgesFromStates = (
     A.chain(([from, { events }]) =>
       pipe(
         events as Name[],
-        A.map((to) => ({
-          from: (from as Name).toString(),
-          to: to.toString(),
-        }))
+        A.map((to) =>
+          tag('FromState', {
+            from: (from as Name).toString(),
+            to: to.toString(),
+            isReachable: true,
+          })
+        )
       )
     )
   );
@@ -73,10 +110,13 @@ const createEdgesFromEvents = (
     A.chain(([from, { toStates, toEvents }]) =>
       pipe(
         [...toStates, ...toEvents],
-        A.map((to) => ({
-          from: (from as Name).toString(),
-          to: to.toString(),
-        }))
+        A.map((to) =>
+          tag('FromEvent', {
+            from: (from as Name).toString(),
+            to: to.toString(),
+            isReachable: true,
+          })
+        )
       )
     )
   );
@@ -126,35 +166,8 @@ export const createGraph = (stateMachine: StateMachine): StateMachineGraph => ({
   edges: createEdges(stateMachine),
 });
 
-/**
- * It's a greeting
- *
- * @since 1.0.0
- * @category Util
- */
-export const graphToDot = (graph: StateMachineGraph): string => {
-  const g = Graphviz.digraph();
+// --------------------------------------------------------------------------------------------------------------------
+// Constructors
+// --------------------------------------------------------------------------------------------------------------------
 
-  graph.nodes.forEach((node) =>
-    g.createNode(
-      node.id,
-      {
-        State: {
-          shape: 'box',
-          style: 'rounded, filled',
-          fillcolor: '#82E0AA',
-        },
-        Event: {
-          shape: 'box',
-          style: 'filled',
-          fillcolor: '#F6DDCC',
-          height: 0.2,
-        },
-      }[node.tag]
-    )
-  );
-
-  graph.edges.forEach((edge) => g.createEdge([edge.from, edge.to]));
-
-  return Graphviz.toDot(g);
-};
+type TaggedUnion<T> = Union<{ [key in keyof T]: Tagged<key, T[key]> }>;
