@@ -4,9 +4,16 @@ import * as Graphviz from 'ts-graphviz';
 import * as R from 'fp-ts/Record';
 import * as A from 'fp-ts/Array';
 import { pipe } from 'fp-ts/function';
-import { StateMachine, StateMachineSpec, Name } from '.';
+import {
+  StateMachine,
+  StateMachineSpec,
+  Name,
+  State,
+  eventIncomingState,
+} from '.';
 import * as S from 'fp-ts/Semigroup';
 import { tag, Tagged, Union } from './types';
+import { eqStrict } from 'fp-ts/lib/Eq';
 
 // --------------------------------------------------------------------------------------------------------------------
 // Model
@@ -56,14 +63,14 @@ export type StateMachineGraph = {
 // Constructors
 // --------------------------------------------------------------------------------------------------------------------
 
-const createNodes = (
-  stateMachine: StateMachine
+const createNodes = <SM extends StateMachine>(state?: State<SM>) => (
+  stateMachine: SM
 ): StateMachineGraph['nodes'] => [
   ...pipe(
     stateMachine.states,
     R.collect((id, node) =>
       tag('State', {
-        isSelected: false,
+        isSelected: state ? id === state : true,
         isInit: node.init,
         id,
       })
@@ -74,15 +81,17 @@ const createNodes = (
     R.keys,
     A.map((id) =>
       tag('Event', {
-        isReachable: true,
+        isReachable: state
+          ? A.elem(eqStrict)(state)(eventIncomingState(stateMachine, id))
+          : true,
         id,
       })
     )
   ),
 ];
 
-const createEdgesFromStates = (
-  stateMachine: StateMachine
+const createEdgesFromStates = <SM extends StateMachine>(state?: State<SM>) => (
+  stateMachine: SM
 ): StateMachineGraph['edges'] =>
   pipe(
     stateMachine.states,
@@ -94,15 +103,15 @@ const createEdgesFromStates = (
           tag('FromState', {
             from: (from as Name).toString(),
             to: to.toString(),
-            isReachable: true,
+            isReachable: state ? from === state : true,
           })
         )
       )
     )
   );
 
-const createEdgesFromEvents = (
-  stateMachine: StateMachine
+const createEdgesFromEvents = <SM extends StateMachine>(state?: State<SM>) => (
+  stateMachine: SM
 ): StateMachineGraph['edges'] =>
   pipe(
     stateMachine.events,
@@ -114,18 +123,18 @@ const createEdgesFromEvents = (
           tag('FromEvent', {
             from: (from as Name).toString(),
             to: to.toString(),
-            isReachable: true,
+            isReachable: state ? from === state : true,
           })
         )
       )
     )
   );
 
-const createEdges = (
-  stateMachine: StateMachine
+const createEdges = <SM extends StateMachine>(state?: State<SM>) => (
+  stateMachine: SM
 ): StateMachineGraph['edges'] => [
-  ...createEdgesFromStates(stateMachine),
-  ...createEdgesFromEvents(stateMachine),
+  ...createEdgesFromStates(state)(stateMachine),
+  ...createEdgesFromEvents(state)(stateMachine),
 ];
 
 /**
@@ -161,13 +170,15 @@ const createEdges = (
  *     ],
  *   });
  */
-export const createGraph = (stateMachine: StateMachine): StateMachineGraph => ({
-  nodes: createNodes(stateMachine),
-  edges: createEdges(stateMachine),
+export const createGraph = <SM extends StateMachine>(state?: State<SM>) => (
+  stateMachine: SM
+): StateMachineGraph => ({
+  nodes: createNodes(state)(stateMachine),
+  edges: createEdges(state)(stateMachine),
 });
 
 // --------------------------------------------------------------------------------------------------------------------
-// Constructors
+// Internal
 // --------------------------------------------------------------------------------------------------------------------
 
 type TaggedUnion<T> = Union<{ [key in keyof T]: Tagged<key, T[key]> }>;

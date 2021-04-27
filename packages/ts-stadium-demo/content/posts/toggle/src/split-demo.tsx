@@ -24,7 +24,11 @@ export const SplitDemo = () => {
   return (
     <Split>
       <Render state={state} onEvent={() => {}} />
-      <Graph stateMachine={stateMachine} graphAttrs={graphAttrs} />
+      <Graph
+        stateMachine={stateMachine}
+        graphAttrs={graphAttrs}
+        state={state.tag}
+      />
     </Split>
   );
 };

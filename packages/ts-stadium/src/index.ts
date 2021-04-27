@@ -4,8 +4,9 @@ import { HKT, Kind, Kind2, URIS, URIS2 } from 'fp-ts/HKT';
 import { pipe } from 'fp-ts/function';
 import * as R from 'fp-ts/Record';
 import * as A from 'fp-ts/Array';
-import { eqStrict } from 'fp-ts/lib/Eq';
-import { Monad1 } from 'fp-ts/lib/Monad';
+import * as O from 'fp-ts/Option';
+import { eqStrict } from 'fp-ts/Eq';
+import { Monad1 } from 'fp-ts/Monad';
 import { NoData, Tagged, Union } from './types';
 
 // ----------------------------------------------------------------------------
@@ -335,7 +336,7 @@ type Tuple<T> =
   | [T, T, T, T, T, T, T, T, T]
   | [T, T, T, T, T, T, T, T, T, T];
 
-type State<SM extends StateMachine> = keyof SM['states'];
+export type State<SM extends StateMachine> = keyof SM['states'];
 
 type Event<SM extends StateMachine> = keyof SM['events'];
 
@@ -343,6 +344,11 @@ type StateOutgoingEvent<
   S extends State<SM>,
   SM extends StateMachine
 > = TupleToUnion<SM['states'][S]['events']>;
+
+const stateOutgoingEvent = <SM extends StateMachine>(
+  stateMachine: SM,
+  state: State<SM>
+): Event<SM>[] => stateMachine.states[state].events;
 
 type EventOutgoingEvent<
   E extends Event<SM>,
@@ -359,6 +365,18 @@ type EventIncomingState<E extends Event<SM>, SM extends StateMachine> = Union<
     [S in State<SM>]: StateOutgoingEvent<S, SM> extends E ? S : never;
   }
 >;
+
+export const eventIncomingState = <SM extends StateMachine>(
+  stateMachine: SM,
+  event: Event<SM>
+): State<SM>[] =>
+  pipe(
+    stateMachine.states,
+    R.collect((k, v) => [k, v] as const),
+    A.filterMap(([k, { events }]) =>
+      A.elem(eqStrict)(event)(events as Event<SM>[]) ? O.some(k) : O.none
+    )
+  );
 
 type Extract<T> = T extends infer O ? { [K in keyof O]: O[K] } : never;
 

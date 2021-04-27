@@ -8,27 +8,37 @@ import { ClassNames } from '@emotion/react';
 
 export const Graph = ({
   stateMachine,
+  state,
   graphAttrs = '',
 }: {
   stateMachine: StateMachine;
   graphAttrs: string;
+  state: string;
 }) => {
-  const dot = pipe(stateMachine, createGraph, renderDot);
+  const [active, setActive] = React.useState(true);
+
+  const dot = pipe(
+    stateMachine,
+    createGraph(active ? state : undefined),
+    renderDot
+  );
 
   const dotPatched = dot.replace('digraph {', `digraph { ${graphAttrs}`);
 
   return (
-    <ClassNames>
-      {({ css }) => (
-        <Graphviz
-          dot={dotPatched}
-          className={css`
-            svg {
-              width: 100%;
-            }
-          `}
-        />
-      )}
-    </ClassNames>
+    <div onClick={() => setActive((st) => !st)}>
+      <ClassNames>
+        {({ css }) => (
+          <Graphviz
+            dot={dotPatched}
+            className={css`
+              svg {
+                width: 100%;
+              }
+            `}
+          />
+        )}
+      </ClassNames>
+    </div>
   );
 };
