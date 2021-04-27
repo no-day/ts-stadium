@@ -1,5 +1,6 @@
 {
   "name": "@no-day/ts-stadium",
+  "private": true,
   "homepage": "https://github.com/no-day/fp-ts-library-template",
   "version": "1.0.0-rc.1",
   "main": "dist/index.js",
