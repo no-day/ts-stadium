@@ -56,4 +56,4 @@ jobs:
       - name: Install
         run: yarn install
 
-      - run: yarn lerna publish from-package --yes --no-verify-access
+      - run: yarn lerna publish --yes --no-verify-access
