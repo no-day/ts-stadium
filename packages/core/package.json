@@ -1,15 +1,13 @@
 {
   "name": "@ts-stadium/core",
   "homepage": "https://github.com/no-day/ts-stadium",
-  "version": "0.0.0",
+  "version": "1.0.0-alpha.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "license": "MIT",
   "peerDependencies": {
     "fp-ts": "^2.9.5"
   },
-  "dependencies": {},
-  "devDependencies": {},
   "scripts": {
     "build": "yarn tsc",
     "publish": ""
