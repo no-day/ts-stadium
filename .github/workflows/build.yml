@@ -12,7 +12,11 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 15.x]
+        node-version: [
+            # 12.x,
+            # 14.x,
+            15.x,
+          ]
 
     steps:
       - uses: actions/checkout@v2
@@ -52,4 +56,4 @@ jobs:
       - name: Install
         run: yarn install
 
-      - run: yarn lerna publish from-package
+      - run: yarn lerna publish from-package --yes
