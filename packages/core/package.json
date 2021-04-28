@@ -11,5 +11,8 @@
   "scripts": {
     "build": "yarn tsc",
     "publish": ""
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
