@@ -1,0 +1,1 @@
+# ts-stadium/core

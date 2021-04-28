@@ -1,20 +1,11 @@
 # ts-stadium
 
-Write typesafe statemachines and get them visualized.
+Write typesafe state machines and get them visualized.
 
-<!-- AUTO-GENERATED-CONTENT:START (TOC) -->
+## Libraries
 
-- [Docs](#docs)
-- [Demo](#demo)
-- [Features](#features)
-<!-- AUTO-GENERATED-CONTENT:END -->
+- [@ts-stadium/core](https://github.com/no-day/ts-stadium/tree/main/packages/core) ([API Docs](https://no-day.github.io/ts-stadium/docs/core/))
 
-## Docs
+## Demos
 
-[API Docs](https://no-day.github.io/ts-stadium)
-
-## Demo
-
-[Blog with Demos](https://no-day.github.io/ts-stadium/demo)
-
-## Features
+- [Blog with Demos](https://no-day.github.io/ts-stadium/demo)
