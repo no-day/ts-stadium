@@ -3,15 +3,6 @@ import * as cp from 'child_process';
 import * as path from 'path';
 import { pipe } from 'fp-ts/function';
 
-if (cp.execSync('git status --porcelain').toString() !== '') {
-  console.error('Git working directory not clean');
-  process.exit(1);
-}
-
-fs.rmdirSync('public', { recursive: true });
-
-cp.execSync('mkdir -p public/docs');
-
 const genDocs = (workspace: string) => {
   const tag = cp.execSync(`git describe --match "${workspace}@*" HEAD`);
   cp.execSync(`git checkout ${tag}`);
@@ -68,5 +59,19 @@ const genDemo = (workspace: string) => {
   cp.execSync(`git checkout main`);
 };
 
-genDocs('@ts-stadium/core');
-genDemo('@no-day/ts-stadium-demo');
+const main = () => {
+  if (cp.execSync('git status --porcelain').toString() !== '') {
+    console.error('Git working directory not clean');
+    process.exit(1);
+  }
+
+  fs.rmdirSync('public', { recursive: true });
+  cp.execSync('mkdir -p public/docs');
+
+  genDocs('@ts-stadium/core');
+  genDemo('@no-day/ts-stadium-demo');
+
+  cp.execSync('cp -r docs/* -t public');
+};
+
+main();
