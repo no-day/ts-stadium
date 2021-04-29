@@ -69,7 +69,7 @@ const main = () => {
   cp.execSync('mkdir -p public/docs');
 
   genDocs('@ts-stadium/core');
-  genDemo('@no-day/ts-stadium-demo');
+  genDemo('@ts-stadium/demo');
 
   cp.execSync('cp -r docs/* -t public');
 };

@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@no-day/ts-stadium-demo",
+  "name": "@ts-stadium/demo",
   "description": "",
   "version": "1.0.0-alpha.0",
   "starter-name": "gatsby-starter-minimal-blog",
