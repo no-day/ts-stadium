@@ -29,11 +29,44 @@ const genDocs = (workspace: string) => {
     JSON.parse,
     (_) => _.version
   );
-  const targetDir = `public/docs/${workspace}/${version}`;
+  const targetDir = `public/docs/${workspace}/latest`;
+  pipe(
+    { version },
+    (_) => JSON.stringify(_, null, 2),
+    (_) => fs.writeFileSync(path.join(targetDir, 'version.json'), _)
+  );
   cp.execSync(`mkdir -p ${targetDir}`);
-  cp.execSync(`cp -r ${workspaceLocation}/docs/* ${targetDir}`);
+  cp.execSync(`cp -r ${path.join(workspaceLocation, 'docs/*')} ${targetDir}`);
+  cp.execSync(`git checkout main`);
+};
+
+const genDemo = (workspace: string) => {
+  const tag = cp.execSync(`git describe --match "${workspace}@*" HEAD`);
+  cp.execSync(`git checkout ${tag}`);
+  cp.execSync('yarn install');
+  cp.execSync(`yarn workspace ${workspace} build`);
+  const workspaces = pipe(
+    cp.execSync('yarn workspaces info'),
+    (_) => _.toString(),
+    JSON.parse
+  );
+  const workspaceLocation = workspaces[workspace].location;
+  const version = pipe(
+    fs.readFileSync(path.join(workspaceLocation, `package.json`)),
+    (_) => _.toString(),
+    JSON.parse,
+    (_) => _.version
+  );
+  const targetDir = `public/demo/latest`;
+  pipe(
+    { version },
+    (_) => JSON.stringify(_, null, 2),
+    (_) => fs.writeFileSync(path.join(targetDir, 'version.json'), _)
+  );
+  cp.execSync(`mkdir -p ${targetDir}`);
+  cp.execSync(`cp -r ${path.join(workspaceLocation, 'public/*')} ${targetDir}`);
+  cp.execSync(`git checkout main`);
 };
 
 genDocs('@ts-stadium/core');
-
-cp.execSync(`git checkout HEAD`);
+genDemo('@ts-stadium/demo');

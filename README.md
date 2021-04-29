@@ -4,7 +4,9 @@ Write typesafe state machines and get them visualized.
 
 ## Libraries
 
-- [@ts-stadium/core](https://github.com/no-day/ts-stadium/tree/main/packages/core) ([API Docs](https://no-day.github.io/ts-stadium/docs/core/))
+| Package                                                                         | Info | API                                                         |
+| ------------------------------------------------------------------------------- | ---- | ----------------------------------------------------------- |
+| [ts-stadium/core](https://github.com/no-day/ts-stadium/tree/main/packages/core) |      | [API](https://no-day.github.io/ts-stadium/docs/core/latest) |
 
 ## Demos
 
