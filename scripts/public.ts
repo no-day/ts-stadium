@@ -69,4 +69,4 @@ const genDemo = (workspace: string) => {
 };
 
 genDocs('@ts-stadium/core');
-genDemo('@ts-stadium/demo');
+genDemo('@no-day/ts-stadium-demo');
