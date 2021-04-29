@@ -1,6 +1,7 @@
 {
   "extends": "../../tsconfig.settings.json",
   "compilerOptions": {
+    "composite": true,
     "outDir": "./dist" /* Redirect output structure to the directory. */
   },
   "include": ["src/**/*.ts"]
