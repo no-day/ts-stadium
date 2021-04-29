@@ -93,12 +93,12 @@
       }
     },
     {
-      "label": "ts-stadium-demo develop",
+      "label": "@ts-stadium/demo develop",
       "runOptions": { "runOn": "folderOpen" },
       "type": "shell",
       "command": "yarn",
       "options": {
-        "cwd": "packages/ts-stadium-demo"
+        "cwd": "packages/demo"
       },
       "isBackground": true,
       "args": ["develop"],

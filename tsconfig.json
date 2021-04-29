@@ -1,5 +1,11 @@
 {
   "extends": "./tsconfig.settings.json",
-  "references": [{ "path": "packages/core" }],
-  "include": []
+
+  "include": [
+    "packages/**/src/**/*.ts",
+    "packages/**/content/**/*.ts",
+    "packages/**/content/**/*.tsx",
+    "./custom.d.ts"
+  ],
+  "compilerOptions": {}
 }
