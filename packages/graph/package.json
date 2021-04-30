@@ -6,7 +6,7 @@
   "typings": "dist/index.d.ts",
   "license": "MIT",
   "dependencies": {
-    "@ts-stadium/core": "1.0.0-alpha.4"
+    "@ts-stadium/core": "*"
   },
   "peerDependencies": {
     "fp-ts": "^2.9.5"
