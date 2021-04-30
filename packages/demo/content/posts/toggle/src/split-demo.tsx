@@ -1,8 +1,8 @@
 import * as React from 'react';
 import * as SM from '@no-day/ts-stadium';
 
-import { Split } from '~/components/split';
-import { Graph } from '~/components/graph';
+import { Split } from '@ts-stadium/demo/components/split';
+import { Graph } from '@ts-stadium/demo/components/graph';
 
 import { stateMachine } from './state-machine';
 import { Toggle } from './toggle';

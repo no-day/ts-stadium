@@ -7,5 +7,7 @@
     "packages/**/content/**/*.tsx",
     "./custom.d.ts"
   ],
-  "compilerOptions": {}
+  "compilerOptions": {
+    "noEmit": true
+  }
 }
