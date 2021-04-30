@@ -7,3 +7,4 @@ public/demo/
 public/
 yarn-error.log
 Gemfile.lock
+**/*.buildinfo
