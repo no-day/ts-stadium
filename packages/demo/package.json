@@ -36,5 +36,8 @@
   "devDependencies": {
     "cross-env": "^7.0.2",
     "tsconfig-paths-webpack-plugin": "^3.5.1"
+  },
+  "resolutions": {
+    "graphql": "15.5.0"
   }
 }

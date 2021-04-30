@@ -1,12 +1,12 @@
 {
-  "extends": "./tsconfig.settings.json",
-
-  "include": [
-    "packages/**/src/**/*.ts",
-    "packages/**/content/**/*.ts",
-    "packages/**/content/**/*.tsx",
-    "./custom.d.ts"
+  "references": [
+    { "path": "./packages/core" },
+    { "path": "./packages/graph" },
+    //{ "path": "./packages/demo" },
+    { "path": "./packages/ts-stadium" }
   ],
+  //"extends": "./tsconfig.settings.json",
+  "include": ["global.d.ts"],
   "compilerOptions": {
     "noEmit": true
   }

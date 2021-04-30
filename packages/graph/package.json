@@ -5,6 +5,9 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "license": "MIT",
+  "dependencies": {
+    "@ts-stadium/core": "*"
+  },
   "peerDependencies": {
     "fp-ts": "^2.9.5"
   },

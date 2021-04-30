@@ -1,11 +1,15 @@
 {
   "extends": "../../tsconfig.settings.json",
+  //"references": [{ "path": "../ts-stadium" }],
   "compilerOptions": {
     "baseUrl": ".",
-
-    "paths": {
-      "~/*": ["./content/*"]
-    }
+    "paths": {}
+    //"composite": true,
   },
-  "include": ["./content/**/*.ts", "./content/**/*.tsx"]
+  "include": [
+    "./content/**/*.ts",
+    "./content/**/*.tsx",
+    "../../global.d.ts",
+    "../ts-stadium/src"
+  ]
 }

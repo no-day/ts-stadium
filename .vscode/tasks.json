@@ -2,97 +2,6 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "ts-stadium build:watch",
-      "runOptions": { "runOn": "folderOpen" },
-      "type": "shell",
-      "command": "yarn",
-      "options": {
-        "cwd": "packages/ts-stadium"
-      },
-      "isBackground": true,
-      "args": ["build:watch"],
-      "group": "build",
-      "presentation": {
-        "reveal": "always",
-        "echo": false,
-        "focus": false,
-        "panel": "dedicated"
-      }
-    },
-    {
-      "label": "ts-stadium docs:watch",
-      "runOptions": { "runOn": "folderOpen" },
-      "type": "shell",
-      "command": "yarn",
-      "options": {
-        "cwd": "packages/ts-stadium"
-      },
-      "isBackground": true,
-      "args": ["docs:watch"],
-      "group": "none",
-      "presentation": {
-        "reveal": "always",
-        "echo": false,
-        "focus": false,
-        "panel": "dedicated"
-      }
-    },
-    {
-      "label": "ts-stadium md:watch",
-      "runOptions": { "runOn": "folderOpen" },
-      "type": "shell",
-      "command": "yarn",
-      "options": {
-        "cwd": "packages/ts-stadium"
-      },
-      "isBackground": true,
-      "args": ["md:watch"],
-      "group": "none",
-      "presentation": {
-        "reveal": "always",
-        "echo": false,
-        "focus": false,
-        "panel": "dedicated"
-      }
-    },
-    {
-      "label": "ts-stadium docs-preview:watch",
-      "runOptions": { "runOn": "folderOpen" },
-      "type": "shell",
-      "command": "yarn",
-      "isBackground": true,
-      "args": ["docs-preview:watch"],
-      "group": "none",
-      "presentation": {
-        "reveal": "always",
-        "echo": false,
-        "focus": false,
-        "panel": "dedicated"
-      },
-      "options": {
-        "shell": { "args": ["-i"] },
-        "cwd": "packages/ts-stadium"
-      }
-    },
-    {
-      "label": "ts-stadium test:watch",
-      "runOptions": { "runOn": "folderOpen" },
-      "type": "shell",
-      "command": "yarn",
-      "options": {
-        "cwd": "packages/ts-stadium"
-      },
-      "isBackground": true,
-      "args": ["test:watch"],
-      "group": "none",
-      "presentation": {
-        "reveal": "always",
-        "echo": false,
-        "focus": false,
-        "panel": "dedicated"
-      }
-    },
-    {
       "label": "@ts-stadium/demo develop",
       "runOptions": { "runOn": "folderOpen" },
       "type": "shell",
@@ -102,6 +11,24 @@
       },
       "isBackground": true,
       "args": ["develop"],
+      "group": "none",
+      "presentation": {
+        "reveal": "always",
+        "echo": false,
+        "focus": false,
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "build:watch",
+      "runOptions": { "runOn": "folderOpen" },
+      "type": "shell",
+      "command": "yarn",
+      "options": {
+        "cwd": "."
+      },
+      "isBackground": true,
+      "args": ["build:watch"],
       "group": "none",
       "presentation": {
         "reveal": "always",
@@ -125,5 +52,96 @@
     //     "panel": "dedicated"
     //   }
     // }
+    // {
+    //   "label": "ts-stadium build:watch",
+    //   "runOptions": { "runOn": "folderOpen" },
+    //   "type": "shell",
+    //   "command": "yarn",
+    //   "options": {
+    //     "cwd": "packages/ts-stadium"
+    //   },
+    //   "isBackground": true,
+    //   "args": ["build:watch"],
+    //   "group": "build",
+    //   "presentation": {
+    //     "reveal": "always",
+    //     "echo": false,
+    //     "focus": false,
+    //     "panel": "dedicated"
+    //   }
+    // },
+    // {
+    //   "label": "ts-stadium docs:watch",
+    //   "runOptions": { "runOn": "folderOpen" },
+    //   "type": "shell",
+    //   "command": "yarn",
+    //   "options": {
+    //     "cwd": "packages/ts-stadium"
+    //   },
+    //   "isBackground": true,
+    //   "args": ["docs:watch"],
+    //   "group": "none",
+    //   "presentation": {
+    //     "reveal": "always",
+    //     "echo": false,
+    //     "focus": false,
+    //     "panel": "dedicated"
+    //   }
+    // },
+    // {
+    //   "label": "ts-stadium md:watch",
+    //   "runOptions": { "runOn": "folderOpen" },
+    //   "type": "shell",
+    //   "command": "yarn",
+    //   "options": {
+    //     "cwd": "packages/ts-stadium"
+    //   },
+    //   "isBackground": true,
+    //   "args": ["md:watch"],
+    //   "group": "none",
+    //   "presentation": {
+    //     "reveal": "always",
+    //     "echo": false,
+    //     "focus": false,
+    //     "panel": "dedicated"
+    //   }
+    // },
+    // {
+    //   "label": "ts-stadium docs-preview:watch",
+    //   "runOptions": { "runOn": "folderOpen" },
+    //   "type": "shell",
+    //   "command": "yarn",
+    //   "isBackground": true,
+    //   "args": ["docs-preview:watch"],
+    //   "group": "none",
+    //   "presentation": {
+    //     "reveal": "always",
+    //     "echo": false,
+    //     "focus": false,
+    //     "panel": "dedicated"
+    //   },
+    //   "options": {
+    //     "shell": { "args": ["-i"] },
+    //     "cwd": "packages/ts-stadium"
+    //   }
+    // },
+    // {
+    //   "label": "ts-stadium test:watch",
+    //   "runOptions": { "runOn": "folderOpen" },
+    //   "type": "shell",
+    //   "command": "yarn",
+    //   "options": {
+    //     "cwd": "packages/ts-stadium"
+    //   },
+    //   "isBackground": true,
+    //   "args": ["test:watch"],
+    //   "group": "none",
+    //   "presentation": {
+    //     "reveal": "always",
+    //     "echo": false,
+    //     "focus": false,
+    //     "panel": "dedicated"
+    //   }
+    // },
   ]
 }
