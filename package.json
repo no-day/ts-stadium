@@ -6,10 +6,10 @@
   "scripts": {
     "build:watch": "yarn tsc --build --watch",
     "test": "yarn workspace @no-day/ts-stadium test",
-    "check": "yarn build && yarn test && yarn deps",
     "public": "ts-node scripts/public.ts",
     "release": "bash scripts/release.sh",
-    "deps": "yarn lerna exec --no-bail --stream depcheck"
+    "deps": "yarn lerna exec --no-bail --stream depcheck",
+    "ci-dry": "bash scripts/ci-dry.sh"
   },
   "dependencies": {
     "fp-ts": "^2.9.5"
