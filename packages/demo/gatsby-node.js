@@ -11,7 +11,7 @@ exports.onCreateWebpackConfig = ({
     resolve: {
       plugins: [
         new TsconfigPathsPlugin({
-          /* options: see below */
+          configFile: '../../tsconfig.settings.json',
         }),
       ],
     },
