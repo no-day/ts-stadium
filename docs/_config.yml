@@ -8,4 +8,6 @@ aux_links:
   '@ts-stadium on GitHub':
     - 'https://github.com/no-day/ts-stadium'
   'Blog with Demos':
-    - 'https://no-day.github.io/ts-stadium/demo/latest'
+    - 'https://no-day.github.io/ts-stadium/demo'
+
+color_scheme: dark

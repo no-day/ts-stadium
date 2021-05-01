@@ -32,7 +32,7 @@ const genDocs = (workspace: string) => {
     (_) => _.version
   );
   const unscopedName = workspace.split('/')[1];
-  const targetDir = `public/docs/packages/${unscopedName}`;
+  const targetDir = `public/packages/${unscopedName}`;
   cp.execSync(`mkdir -p ${targetDir}`);
   pipe(
     { version },
@@ -62,7 +62,7 @@ const genDocs = (workspace: string) => {
                 ...result.attributes,
                 title: unscopedName,
                 parent: 'packages',
-                permalink: `/docs/packages/${unscopedName}`,
+                permalink: `/packages/${unscopedName}`,
               },
             }
           : {
@@ -104,7 +104,7 @@ const genDemo = (workspace: string) => {
     JSON.parse,
     (_) => _.version
   );
-  const targetDir = `public/demo/latest`;
+  const targetDir = `public/demo`;
   cp.execSync(`mkdir -p ${targetDir}`);
   pipe(
     { version },
@@ -125,7 +125,7 @@ const main = () => {
   }
 
   fs.rmdirSync('public', { recursive: true });
-  cp.execSync('mkdir -p public/docs');
+  cp.execSync('mkdir -p public/packages');
 
   genDocs('@ts-stadium/core');
   genDocs('@ts-stadium/graph');
