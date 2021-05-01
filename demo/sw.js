@@ -27,10 +27,10 @@ workbox.core.clientsClaim();
  */
 self.__precacheManifest = [
   {
-    "url": "webpack-runtime-41af0b00463487764a2e.js"
+    "url": "webpack-runtime-1ad2a0b6d0e841f49824.js"
   },
   {
-    "url": "styles.3202f12e77110dbe70e5.css"
+    "url": "styles.b108628122f54b5ec67f.css"
   },
   {
     "url": "styles-407fe62976dc5310c43e.js"
@@ -42,14 +42,26 @@ self.__precacheManifest = [
     "url": "ceb0f029-84c699d74f1b782c2a79.js"
   },
   {
-    "url": "app-8a01b0de89b56696f1bf.js"
+    "url": "app-854035b64875063dc7fc.js"
   },
   {
     "url": "offline-plugin-app-shell-fallback/index.html",
-    "revision": "a0c66d58d83fe78012bd966b2f7f3409"
+    "revision": "c1e0fc1c897fa51f7bfe3fe5f3b4f1ca"
   },
   {
     "url": "component---cache-caches-gatsby-plugin-offline-app-shell-js-14cb3423ad297ca49760.js"
+  },
+  {
+    "url": "page-data/offline-plugin-app-shell-fallback/page-data.json",
+    "revision": "42b9ceeb063370b03464ce70ab21d32f"
+  },
+  {
+    "url": "page-data/sq/d/3090400250.json",
+    "revision": "ef2cd13df48f85946026698962ee3e4d"
+  },
+  {
+    "url": "page-data/app-data.json",
+    "revision": "ef56acd8b5aee1303ada0dc3118e940d"
   },
   {
     "url": "polyfill-ada9b098a4186446ed54.js"
@@ -60,7 +72,7 @@ self.__precacheManifest = [
   },
   {
     "url": "manifest.webmanifest",
-    "revision": "1d92f1c027bce9432b6f7d9787c8d202"
+    "revision": "eed3033b328144830acda0ac1c1214f4"
   }
 ].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
@@ -147,12 +159,12 @@ const navigationRoute = new NavigationRoute(async ({ event }) => {
   lastNavigationRequest = event.request.url
 
   let { pathname } = new URL(event.request.url)
-  pathname = pathname.replace(new RegExp(`^`), ``)
+  pathname = pathname.replace(new RegExp(`^/ts-stadium/demo`), ``)
 
   // Check for resources + the app bundle
   // The latter may not exist if the SW is updating to a new version
   const resources = await idbKeyval.get(`resources:${pathname}`)
-  if (!resources || !(await caches.match(`/app-8a01b0de89b56696f1bf.js`))) {
+  if (!resources || !(await caches.match(`/ts-stadium/demo/app-854035b64875063dc7fc.js`))) {
     return await fetch(event.request)
   }
 
@@ -165,7 +177,7 @@ const navigationRoute = new NavigationRoute(async ({ event }) => {
     }
   }
 
-  const offlineShell = `/offline-plugin-app-shell-fallback/index.html`
+  const offlineShell = `/ts-stadium/demo/offline-plugin-app-shell-fallback/index.html`
   const offlineShellWithKey = workbox.precaching.getCacheKeyForURL(offlineShell)
   return await caches.match(offlineShellWithKey)
 })
