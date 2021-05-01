@@ -91,7 +91,7 @@ const genDemo = (workspace: string) => {
     cp.execSync(`git checkout ${tag}`);
     cp.execSync('yarn install');
   }
-  cp.execSync(`yarn workspace ${workspace} build`);
+  cp.execSync(`yarn workspace ${workspace} build --prefix-paths`);
   const workspaces = pipe(
     cp.execSync('yarn workspaces info'),
     (_) => _.toString(),
