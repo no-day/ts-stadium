@@ -3,7 +3,10 @@
   //"references": [{ "path": "../ts-stadium" }],
   "compilerOptions": {
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@no-day/ts-stadium/*": "../ts-stadium/src/*",
+      "~/*": "./src/*"
+    }
     //"composite": true,
   },
   "include": [

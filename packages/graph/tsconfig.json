@@ -3,7 +3,11 @@
   "references": [{ "path": "../core" }],
   "compilerOptions": {
     "outDir": "./dist",
-    "composite": true
+    "composite": true,
+    "paths": {
+      "@ts-stadium/core": ["../core/src"],
+      "~/*": ["./src/*"]
+    }
   },
-  "include": ["src/**/*.ts", "lib/**/*.ts"]
+  "include": ["src/**/*.ts"]
 }
