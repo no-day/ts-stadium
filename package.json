@@ -17,6 +17,8 @@
   "devDependencies": {
     "depcheck": "^1.4.0",
     "docs-ts": "^0.6.10",
+    "front-matter": "^4.0.2",
+    "glob": "^7.1.6",
     "lerna": "^4.0.0",
     "package-dependency-graph": "^1.11.2",
     "ts-node": "^9.1.1",
