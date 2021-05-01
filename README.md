@@ -12,3 +12,5 @@ Write typesafe state machines and get them visualized.
 ## Demos
 
 - [Blog with Demos](https://no-day.github.io/ts-stadium/demo/latest)
+
+<img src="dep-graph.svg"/>
