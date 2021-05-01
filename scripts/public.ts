@@ -32,7 +32,7 @@ const genDocs = (workspace: string) => {
     (_) => _.version
   );
   const unscopedName = workspace.split('/')[1];
-  const targetDir = `public/docs/${unscopedName}`;
+  const targetDir = `public/docs/packages/${unscopedName}`;
   cp.execSync(`mkdir -p ${targetDir}`);
   pipe(
     { version },
@@ -61,8 +61,8 @@ const genDocs = (workspace: string) => {
               attributes: {
                 ...result.attributes,
                 title: unscopedName,
-                parent: undefined,
-                permalink: `/docs/${unscopedName}`,
+                parent: 'packages',
+                permalink: `/docs/packages/${unscopedName}`,
               },
             }
           : {
@@ -70,6 +70,7 @@ const genDocs = (workspace: string) => {
               attributes: {
                 ...result.attributes,
                 parent: unscopedName,
+                grand_parent: 'packages',
               },
             },
       (result) =>
