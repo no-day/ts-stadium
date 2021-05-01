@@ -35,6 +35,10 @@ module.exports = {
             name: `Github`,
             url: `https://github.com/no-day/ts-stadium`,
           },
+          {
+            name: `API`,
+            url: `https://no-day.github.io/ts-stadium/docs/packages`,
+          },
         ],
       },
     },
