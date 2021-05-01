@@ -1,21 +1,5 @@
 {
   "compilerOptions": {
-    "paths": {
-      "@no-day/ts-stadium": ["./packages/ts-stadium/src"],
-      "@no-day/ts-stadium/dot": ["./packages/ts-stadium/src/dot.ts"],
-      "@no-day/ts-stadium/graph": ["./packages/ts-stadium/src/graph.ts"],
-      "@ts-stadium/demo/*": ["./packages/demo/content/*"]
-
-      // "@ts-stadium/core": ["./packages/core/src"],
-      // "@ts-stadium/core/*": ["./packages/core/src/*"],
-      // "@ts-stadium/core/~/*": ["./packages/core/lib/*"],
-
-      // "@ts-stadium/graph": ["./packages/graph/src"],
-      // "@ts-stadium/graph/*": ["./packages/graph/src/*"],
-      // "@ts-stadium/graph/~/*": ["./packages/graph/lib/*"]
-
-      // "~/*": ["./content/*"]
-    },
     "declarationMap": true,
     "sourceMap": true,
     "esModuleInterop": true,

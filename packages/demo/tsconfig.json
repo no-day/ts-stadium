@@ -4,8 +4,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@no-day/ts-stadium/*": "../ts-stadium/src/*",
-      "~/*": "./src/*"
+      "@no-day/ts-stadium/*": ["../ts-stadium/src/*"],
+      "~/*": ["./src/*"]
     }
     //"composite": true,
   },
