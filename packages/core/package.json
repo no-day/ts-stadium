@@ -1,6 +1,6 @@
 {
   "name": "@ts-stadium/core",
-  "homepage": "https://github.com/no-day/ts-stadium",
+  "homepage": "https://github.com/no-day/ts-stadium/tree/main/packages/core",
   "version": "1.0.0",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
