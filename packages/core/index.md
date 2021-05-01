@@ -3,7 +3,7 @@
   "title": "core",
   "nav_order": 1,
   "parent": "packages",
-  "permalink": "/docs/packages/core"
+  "permalink": "/packages/core"
 }
 ---
 

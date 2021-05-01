@@ -3,7 +3,7 @@
   "title": "graph",
   "nav_order": 1,
   "parent": "packages",
-  "permalink": "/docs/packages/graph"
+  "permalink": "/packages/graph"
 }
 ---
 
