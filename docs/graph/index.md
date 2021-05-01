@@ -1,7 +1,9 @@
 ---
-title: index.ts
-nav_order: 1
-parent: Modules
+{
+  "title": "graph",
+  "nav_order": 1,
+  "permalink": "/docs/graph"
+}
 ---
 
 ## index overview
