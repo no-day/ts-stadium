@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "declarationMap": true,
     "sourceMap": true,
     "esModuleInterop": true,

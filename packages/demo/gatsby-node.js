@@ -9,11 +9,7 @@ exports.onCreateWebpackConfig = ({
 }) => {
   actions.setWebpackConfig({
     resolve: {
-      plugins: [
-        new TsconfigPathsPlugin({
-          configFile: '../../tsconfig.settings.json',
-        }),
-      ],
+      plugins: [new TsconfigPathsPlugin({})],
 
       // alias: {
       //   : path.resolve(__dirname, 'path/to/file.js'),
