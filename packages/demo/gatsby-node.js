@@ -14,6 +14,10 @@ exports.onCreateWebpackConfig = ({
           configFile: '../../tsconfig.settings.json',
         }),
       ],
+
+      // alias: {
+      //   : path.resolve(__dirname, 'path/to/file.js'),
+      // },
     },
   });
 };
