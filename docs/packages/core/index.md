@@ -1,8 +1,9 @@
 ---
 {
-  "title": "graph",
+  "title": "core",
   "nav_order": 1,
-  "permalink": "/docs/graph"
+  "parent": "packages",
+  "permalink": "/docs/packages/core"
 }
 ---
 
@@ -15,20 +16,20 @@ Added in v1.0.0
 <h2 class="text-delta">Table of contents</h2>
 
 - [Util](#util)
-  - [Name (type alias)](#name-type-alias)
+  - [NameCore (type alias)](#namecore-type-alias)
 
 ---
 
 # Util
 
-## Name (type alias)
+## NameCore (type alias)
 
 Some Name
 
 **Signature**
 
 ```ts
-export type Name = string | symbol | number
+export type NameCore = string | symbol | number
 ```
 
 Added in v1.0.0
