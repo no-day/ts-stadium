@@ -4,6 +4,7 @@
   "compilerOptions": {
     "outDir": "./dist",
     "composite": true,
+    "baseUrl": ".",
     "paths": {
       "@ts-stadium/core": ["../core/src"],
       "~/*": ["./src/*"]
