@@ -4,12 +4,12 @@ Write typesafe state machines and get them visualized.
 
 ## Libraries
 
-| Package                                                                            | Info |
-| ---------------------------------------------------------------------------------- | ---- |
-| [@ts-stadium/core](https://github.com/no-day/ts-stadium/tree/main/packages/core)   |      |
-| [@ts-stadium/graph](https://github.com/no-day/ts-stadium/tree/main/packages/graph) |      |
+| Package                                                                                     | Info |
+| ------------------------------------------------------------------------------------------- | ---- |
+| [@ts-stadium/core](https://github.com/no-day/ts-stadium/tree/main/packages/external/core)   |      |
+| [@ts-stadium/graph](https://github.com/no-day/ts-stadium/tree/main/packages/external/graph) |      |
 
 ## Links
 
-- [API](https://no-day.github.io/ts-stadium/docs/packages)
-- [Blog with Demos](https://no-day.github.io/ts-stadium/demo/latest)
+- [API](https://no-day.github.io/ts-stadium)
+- [Blog with Demos](https://no-day.github.io/ts-stadium/demo)

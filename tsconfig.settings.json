@@ -1,4 +1,12 @@
 {
+  "include": [
+    "packages/private/*/src/**/*.ts",
+    "packages/private/*/src/**/*.tsx",
+    "packages/internal/*/src/**/*.ts",
+    "packages/internal/*/src/**/*.tsx",
+    "packages/external/*/src/**/*.ts",
+    "packages/external/*/src/**/*.tsx"
+  ],
   "compilerOptions": {
     "declarationMap": true,
     "sourceMap": true,

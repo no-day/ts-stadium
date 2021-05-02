@@ -8,6 +8,9 @@
   "peerDependencies": {
     "fp-ts": "^2.9.5"
   },
+  "dependencies": {
+    "@ts-stadium/type-utils": "*"
+  },
   "scripts": {
     "build": "yarn tsc",
     "prepublish": "yarn build"
