@@ -13,5 +13,3 @@ Write typesafe state machines and get them visualized.
 
 - [API](https://no-day.github.io/ts-stadium/docs/packages)
 - [Blog with Demos](https://no-day.github.io/ts-stadium/demo/latest)
-
-<img src="dep-graph.svg"/>

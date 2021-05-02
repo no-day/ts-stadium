@@ -1,7 +1,7 @@
 {
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/*/*"
   ],
   "scripts": {
     "build:watch": "yarn tsc --build --watch",

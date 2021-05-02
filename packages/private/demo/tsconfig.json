@@ -4,9 +4,9 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@no-day/ts-stadium": ["../ts-stadium/src"],
-      "@no-day/ts-stadium/dot": ["../ts-stadium/src/dot"],
-      "@no-day/ts-stadium/graph": ["../ts-stadium/src/graph"],
+      "@no-day/ts-stadium": ["../../private/ts-stadium/src"],
+      "@no-day/ts-stadium/dot": ["../../private/ts-stadium/src/dot"],
+      "@no-day/ts-stadium/graph": ["../../private/ts-stadium/src/graph"],
       "~/*": ["./src/*"]
     }
     //"composite": true,
@@ -14,7 +14,7 @@
   "include": [
     "./content/**/*.ts",
     "./content/**/*.tsx",
-    "../../global.d.ts",
-    "../ts-stadium/src"
+    "../../../global.d.ts",
+    "../../private/ts-stadium/src"
   ]
 }

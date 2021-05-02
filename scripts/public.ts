@@ -13,7 +13,7 @@ const frontMatter = (frontMatter_ as unknown) as (
 const CHECKOUT_LATEST = false;
 
 const genDocs = (workspace: string) => {
-  if (!CHECKOUT_LATEST) {
+  if (CHECKOUT_LATEST) {
     const tag = cp.execSync(`git describe --match "${workspace}@*" HEAD`);
     cp.execSync(`git checkout ${tag}`);
     cp.execSync('yarn install');
@@ -86,7 +86,7 @@ const genDocs = (workspace: string) => {
 };
 
 const genDemo = (workspace: string) => {
-  if (!CHECKOUT_LATEST) {
+  if (CHECKOUT_LATEST) {
     const tag = cp.execSync(`git describe --match "${workspace}@*" HEAD`);
     cp.execSync(`git checkout ${tag}`);
     cp.execSync('yarn install');
