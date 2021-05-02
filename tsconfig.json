@@ -1,9 +1,9 @@
 {
   "references": [
-    { "path": "./packages/core" },
-    { "path": "./packages/graph" },
+    { "path": "./packages/external/core" },
+    { "path": "./packages/external/graph" },
     //{ "path": "./packages/demo" },
-    { "path": "./packages/ts-stadium" }
+    { "path": "./packages/private/ts-stadium" }
   ],
   //"extends": "./tsconfig.settings.json",
   "include": ["global.d.ts"],
