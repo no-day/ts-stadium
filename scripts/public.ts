@@ -18,7 +18,7 @@ const genDocs = (workspace: string) => {
     cp.execSync(`git checkout ${tag}`);
     cp.execSync('yarn install');
   }
-  cp.execSync(`yarn workspace ${workspace} docs-ts`);
+  cp.execSync(`yarn workspace ${workspace} docs`);
   const workspaces = pipe(
     cp.execSync('yarn workspaces info'),
     (_) => _.toString(),

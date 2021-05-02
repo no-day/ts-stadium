@@ -1,4 +1,8 @@
-/** @since 1.0.0 */
+/**
+ * ...
+ *
+ * @since 1.0.0
+ */
 
 import { HKT, Kind, Kind2, URIS, URIS2 } from 'fp-ts/HKT';
 import { pipe } from 'fp-ts/function';
@@ -97,7 +101,7 @@ const unsafeCreateStateMachine = (
  * @since 1.0.0
  * @category Constructors
  * @example
- *   import { createStateMachine } from '@no-day/ts-stadium';
+ *   import { createStateMachine } from '@ts-stadium/core';
  *
  *   const stateMachine = createStateMachine({
  *     states: {
@@ -123,84 +127,84 @@ export const createStateMachine = <
 // Control
 // ----------------------------------------------------------------------------
 
-type ControlEvents<C extends URIS, SM extends StateMachine> = {
-  [E in Event<SM>]: (
-    state: SM['states'][EventIncomingState<E, SM>]['data']
-  ) => Kind<
-    C,
-    (
-      state: SM['states'][EventIncomingState<E, SM>]['data']
-    ) => {
-      event?: SM['states'][EventOutgoingEvent<E, SM>]['data'];
-      state?: SM['states'][EventOutgoingState<E, SM>]['data'];
-    }
-  >;
-};
+// type ControlEvents<C extends URIS, SM extends StateMachine> = {
+//   [E in Event<SM>]: (
+//     state: SM['states'][EventIncomingState<E, SM>]['data']
+//   ) => Kind<
+//     C,
+//     (
+//       state: SM['states'][EventIncomingState<E, SM>]['data']
+//     ) => {
+//       event?: SM['states'][EventOutgoingEvent<E, SM>]['data'];
+//       state?: SM['states'][EventOutgoingState<E, SM>]['data'];
+//     }
+//   >;
+// };
 
-/**
- * @since 1.0.0
- * @category Control
- * @example
- *   import * as SM from '@no-day/ts-stadium';
- *
- *   const stateMachine = SM.createStateMachine({
- *     states: {
- *       On: { events: ['Toggle'] },
- *       Off: { events: ['Toggle'] },
- *     },
- *     events: {
- *       Toggle: { toStates: ['On', 'Off'] },
- *     },
- *   });
- *
- *   const control = SM.createControl(stateMachine, {
- *     Toggle: () => Promise.resolve(SM.tag('On')),
- *   });
- */
-export const createControl = <SM extends StateMachine>(stateMachine: SM) => <
-  C extends URIS
->(
-  C: Monad1<C>
-) => (controlEvents: ControlEvents<C, SM>) => (
-  event: Extract<EventData<SM>>,
-  state: Extract<StateData<SM>>
-): Kind<C, GetNext<SM>> =>
-  A.elem(eqStrict)(event.tag, stateMachine.states[state.tag].events)
-    ? // Capture Event
-      controlEvents[event.tag](state)
-    : // Drop Event
-      C.of({} as GetNext<SM>);
+// /**
+//  * @since 1.0.0
+//  * @category Control
+//  * @example
+//  *   import * as SM from '@ts-stadium/core';
+//  *
+//  *   const stateMachine = SM.createStateMachine({
+//  *     states: {
+//  *       On: { events: ['Toggle'] },
+//  *       Off: { events: ['Toggle'] },
+//  *     },
+//  *     events: {
+//  *       Toggle: { toStates: ['On', 'Off'] },
+//  *     },
+//  *   });
+//  *
+//  *   const control = SM.createControl(stateMachine, {
+//  *     Toggle: () => Promise.resolve(SM.tag('On')),
+//  *   });
+//  */
+// export const createControl = <SM extends StateMachine>(stateMachine: SM) => <
+//   C extends URIS
+// >(
+//   C: Monad1<C>
+// ) => (controlEvents: ControlEvents<C, SM>) => (
+//   event: Extract<EventData<SM>>,
+//   state: Extract<StateData<SM>>
+// ): Kind<C, GetNext<SM>> =>
+//   A.elem(eqStrict)(event.tag, stateMachine.states[state.tag].events)
+//     ? // Capture Event
+//       controlEvents[event.tag](state)
+//     : // Drop Event
+//       C.of({} as GetNext<SM>);
 
-// ----------------------------------------------------------------------------
-// Render
-// ----------------------------------------------------------------------------
+// // ----------------------------------------------------------------------------
+// // Render
+// // ----------------------------------------------------------------------------
 
-type RenderStates<R extends URIS, SM extends StateMachine> = {
-  [S in State<SM>]: (
-    state: SM['states'][S]['data']
-  ) => Kind<R, SM['events'][StateOutgoingEvent<S, SM>]['data']>;
-};
+// type RenderStates<R extends URIS, SM extends StateMachine> = {
+//   [S in State<SM>]: (
+//     state: SM['states'][S]['data']
+//   ) => Kind<R, SM['events'][StateOutgoingEvent<S, SM>]['data']>;
+// };
 
-type RenderStates2<R extends URIS2, B, SM extends StateMachine> = {
-  [S in State<SM>]: (
-    state: SM['states'][S]['data']
-  ) => Kind2<R, B, SM['events'][StateOutgoingEvent<S, SM>]['data']>;
-};
+// type RenderStates2<R extends URIS2, B, SM extends StateMachine> = {
+//   [S in State<SM>]: (
+//     state: SM['states'][S]['data']
+//   ) => Kind2<R, B, SM['events'][StateOutgoingEvent<S, SM>]['data']>;
+// };
 
-/**
- * @since 1.0.0
- * @category Render
- */
-export const createRender: {
-  <SM extends StateMachine>(stateMachine: SM): <R extends URIS2, B>(
-    renderStates: RenderStates2<R, B, SM>
-  ) => (state: StateData<SM>) => Kind2<R, B, EventData<SM>>;
+// /**
+//  * @since 1.0.0
+//  * @category Render
+//  */
+// export const createRender: {
+//   <SM extends StateMachine>(stateMachine: SM): <R extends URIS2, B>(
+//     renderStates: RenderStates2<R, B, SM>
+//   ) => (state: StateData<SM>) => Kind2<R, B, EventData<SM>>;
 
-  <SM extends StateMachine>(stateMachine: SM): <R extends URIS>(
-    renderStates: RenderStates<R, SM>
-  ) => (state: StateData<SM>) => Kind<R, EventData<SM>>;
-} = (stateMachine: any) => (renderStates: any) => (state: any) =>
-  renderStates[state.tag](state);
+//   <SM extends StateMachine>(stateMachine: SM): <R extends URIS>(
+//     renderStates: RenderStates<R, SM>
+//   ) => (state: StateData<SM>) => Kind<R, EventData<SM>>;
+// } = (stateMachine: any) => (renderStates: any) => (state: any) =>
+//   renderStates[state.tag](state);
 
 // ----------------------------------------------------------------------------
 // Util
@@ -269,13 +273,15 @@ export type InitState<SM extends StateMachine> = Union<
   }
 >;
 
-/**
- * ...
- *
- * @since 1.0.0
- * @category Util
- */
-export { tag } from '@ts-stadium/type-utils';
+export {
+  /**
+   * ...
+   *
+   * @since 1.0.0
+   * @category Util
+   */
+  tag,
+} from '@ts-stadium/type-utils';
 
 // ----------------------------------------------------------------------------
 // Internal
@@ -296,6 +302,12 @@ type Tuple<T> =
   | [T, T, T, T, T, T, T, T, T]
   | [T, T, T, T, T, T, T, T, T, T];
 
+/**
+ * ...
+ *
+ * @since 1.0.0
+ * @category Util
+ */
 export type State<SM extends StateMachine> = keyof SM['states'];
 
 type Event<SM extends StateMachine> = keyof SM['events'];
@@ -326,6 +338,12 @@ type EventIncomingState<E extends Event<SM>, SM extends StateMachine> = Union<
   }
 >;
 
+/**
+ * ...
+ *
+ * @since 1.0.0
+ * @category Util
+ */
 export const eventIncomingState = <SM extends StateMachine>(
   stateMachine: SM,
   event: Event<SM>
