@@ -1,17 +1,21 @@
-/**
- * ...
- *
- * @since 1.0.0
- */
+/** @since 1.0.0 */
 
-import { HKT, Kind, Kind2, URIS, URIS2 } from 'fp-ts/HKT';
-import { pipe } from 'fp-ts/function';
-import * as R from 'fp-ts/Record';
-import * as A from 'fp-ts/Array';
-import * as O from 'fp-ts/Option';
-import { eqStrict } from 'fp-ts/Eq';
-import { Monad1 } from 'fp-ts/Monad';
-import { NoData, Tagged, Union } from '@ts-stadium/type-utils';
+import { HKT, Kind, Kind2, URIS, URIS2 } from 'fp-ts/HKT'
+import { pipe } from 'fp-ts/function'
+import * as R from 'fp-ts/Record'
+import * as A from 'fp-ts/Array'
+import * as O from 'fp-ts/Option'
+import { eqStrict } from 'fp-ts/Eq'
+import { Monad1 } from 'fp-ts/Monad'
+import {
+  NoData,
+  Tagged,
+  Union,
+  TupleToUnion,
+  Normalize,
+  Tuple,
+  RecordVal,
+} from '@ts-stadium/type-utils'
 
 // ----------------------------------------------------------------------------
 // Model
@@ -21,29 +25,39 @@ import { NoData, Tagged, Union } from '@ts-stadium/type-utils';
  * A type that describes data relations of a state machine.
  *
  * @since 1.0.0
- * @category Constructors
+ * @category Model
  */
 export interface StateMachine<SMS extends StateMachineSpec = StateMachineSpec> {
   states: {
     [S in keyof SMS['states']]: {
-      data: Tagged<S, Normalize<SMS['states'][S]['data'], NoData>>;
-      events: Normalize<SMS['states'][S]['events'], []>;
-      init: Normalize<SMS['states'][S]['init'], false>;
-    };
-  };
+      data: Tagged<S, Normalize<SMS['states'][S]['data'], NoData>>
+      events: Normalize<SMS['states'][S]['events'], []>
+      init: Normalize<SMS['states'][S]['init'], false>
+    }
+  }
 
   events: {
     [E in keyof SMS['events']]: {
-      data: Tagged<E, Normalize<SMS['events'][E]['data'], NoData>>;
-      toStates: Normalize<SMS['events'][E]['toStates'], []>;
-      toEvents: Normalize<SMS['events'][E]['toEvents'], []>;
-    };
-  };
+      data: Tagged<E, Normalize<SMS['events'][E]['data'], NoData>>
+      toStates: Normalize<SMS['events'][E]['toStates'], []>
+      toEvents: Normalize<SMS['events'][E]['toEvents'], []>
+    }
+  }
 }
+
+type StateMachine_ = StateMachine<StateMachineSpec>
 
 // ----------------------------------------------------------------------------
 // Constructors
 // ----------------------------------------------------------------------------
+
+/**
+ * ...
+ *
+ * @since 1.0.0
+ * @category Constructors
+ */
+export type Name = string | symbol | number
 
 /**
  * Describes state and transition relations of a state machine. Argument fop
@@ -59,20 +73,20 @@ export interface StateMachineSpec<
   states: Record<
     S,
     {
-      data?: any;
-      events?: Tuple<E>;
-      init?: boolean;
+      data?: any
+      events?: Tuple<E>
+      init?: boolean
     }
-  >;
+  >
 
   events: Record<
     E,
     {
-      data?: any;
-      toStates?: Tuple<S>;
-      toEvents?: Tuple<E>;
+      data?: any
+      toStates?: Tuple<S>
+      toEvents?: Tuple<E>
     }
-  >;
+  >
 }
 
 const normailizeSMState = ({
@@ -81,7 +95,7 @@ const normailizeSMState = ({
   init = false,
 }: RecordVal<StateMachineSpec['states']>): RecordVal<
   StateMachine['states']
-> => ({ data, events, init });
+> => ({ data, events, init })
 
 const normailizeSMEvent = ({
   data,
@@ -89,11 +103,11 @@ const normailizeSMEvent = ({
   toStates = [],
 }: RecordVal<StateMachineSpec['events']>): RecordVal<
   StateMachine['events']
-> => ({ data, toEvents, toStates });
+> => ({ data, toEvents, toStates })
 
 const unsafeCreateStateMachine = (
   data: Omit<StateMachine, 'StateMachine'>
-): StateMachine => data as StateMachine;
+): StateMachine => data as StateMachine
 
 /**
  * Creates a state machine, given a data type and a description of valid transitions.
@@ -101,7 +115,7 @@ const unsafeCreateStateMachine = (
  * @since 1.0.0
  * @category Constructors
  * @example
- *   import { createStateMachine } from '@ts-stadium/core';
+ *   import { createStateMachine } from '@no-day/ts-stadium'
  *
  *   const stateMachine = createStateMachine({
  *     states: {
@@ -111,21 +125,21 @@ const unsafeCreateStateMachine = (
  *     events: {
  *       Toggle: { toStates: ['On', 'Off'] },
  *     },
- *   });
+ *   })
  */
 export const createStateMachine = <
-  SMS extends StateMachineSpec<keyof SMS['states'], keyof SMS['events']>
+  SMS extends StateMachineSpec<StateName<SMS>, EventName<SMS>>
 >(
   spec: SMS
-): Extract<StateMachine<SMS>> =>
+): StateMachine<SMS> =>
   unsafeCreateStateMachine({
     states: pipe(spec.states, R.map(normailizeSMState)) as any,
     events: pipe(spec.events, R.map(normailizeSMEvent)) as any,
-  }) as StateMachine<SMS>;
+  }) as StateMachine<SMS>
 
-// ----------------------------------------------------------------------------
-// Control
-// ----------------------------------------------------------------------------
+// // ----------------------------------------------------------------------------
+// // Control
+// // ----------------------------------------------------------------------------
 
 // type ControlEvents<C extends URIS, SM extends StateMachine> = {
 //   [E in Event<SM>]: (
@@ -145,7 +159,7 @@ export const createStateMachine = <
 //  * @since 1.0.0
 //  * @category Control
 //  * @example
-//  *   import * as SM from '@ts-stadium/core';
+//  *   import * as SM from '@no-day/ts-stadium';
 //  *
 //  *   const stateMachine = SM.createStateMachine({
 //  *     states: {
@@ -216,171 +230,159 @@ export const createStateMachine = <
  * @since 1.0.0
  * @category Util
  */
-export const init = <SM extends StateMachine>(
+export const init = <SM extends StateMachine_>(
   stateMachine: SM,
-  initState: SM['states'][InitState<SM>]['data']
-): StateData<SM> => initState;
+  initState: InitState<SM['states']>
+): State<SM> => initState
+
+// ----------------------------------------------------------------------------
+// Destructors
+// ----------------------------------------------------------------------------
 
 /**
  * ...
  *
  * @since 1.0.0
- * @category Util
+ * @category Destructors
  */
-export const typeOf = <T>() => ({} as T);
+export type State<SM extends StateMachine> = Union<MapData<SM['states']>>
 
 /**
  * ...
  *
  * @since 1.0.0
- * @category Util
+ * @category Destructors
  */
-export type Name = string | symbol | number;
+export type Event<SM extends StateMachine> = Union<MapData<SM['events']>>
 
 /**
  * ...
  *
  * @since 1.0.0
- * @category Util
+ * @category Destructors
  */
-export type StateData<SM extends StateMachine> = Union<
+export type InitState<T extends StateMachine['states']> = T[Union<
+  InitStates<T>
+>]['data']
+
+/**
+ * ...
+ *
+ * @since 1.0.0
+ * @category Destructors
+ */
+export type InitStates<T extends StateMachine['states']> = {
+  [S in keyof T]: true extends T[S]['init'] ? S : never
+}
+
+/**
+ * ...
+ *
+ * @since 1.0.0
+ * @category Destructors
+ */
+export const eventIncomingState = <SM extends StateMachine_>(
+  stateMachine: SM,
+  event: EventName<SM>
+): StateName<SM>[] =>
+  pipe(
+    stateMachine.states,
+    R.collect((k, v) => [k, v] as const),
+    A.filterMap(([k, { events }]) =>
+      A.elem(eqStrict)(event)(events as EventName<SM>[]) ? O.some(k) : O.none
+    )
+  )
+
+/**
+ * ...
+ *
+ * @since 1.0.0
+ * @category Destructors
+ */
+export type StateName<
+  T extends { states: Record<Name, any> }
+> = keyof T['states']
+
+/**
+ * ...
+ *
+ * @since 1.0.0
+ * @category Destructors
+ */
+export type EventName<
+  T extends { events: Record<Name, any> }
+> = keyof T['events']
+
+/**
+ * ...
+ *
+ * @since 1.0.0
+ * @category Destructors
+ */
+type StateOutgoingEvent<
+  S extends StateName<SM>,
+  SM extends StateMachine
+> = TupleToUnion<SM['states'][S]['events']>
+
+/**
+ * ...
+ *
+ * @since 1.0.0
+ * @category Destructors
+ */
+const stateOutgoingEvent = <SM extends StateMachine>(
+  stateMachine: SM,
+  state: StateName<SM>
+): EventName<SM>[] => stateMachine.states[state].events
+
+/**
+ * ...
+ *
+ * @since 1.0.0
+ * @category Destructors
+ */
+type EventOutgoingEvent<
+  E extends EventName<SM>,
+  SM extends StateMachine
+> = TupleToUnion<SM['events'][E]['toEvents']>
+
+/**
+ * ...
+ *
+ * @since 1.0.0
+ * @category Destructors
+ */
+type EventOutgoingState<
+  E extends EventName<SM>,
+  SM extends StateMachine
+> = TupleToUnion<SM['events'][E]['toStates']>
+
+/**
+ * ...
+ *
+ * @since 1.0.0
+ * @category Destructors
+ */
+type EventIncomingState<
+  E extends EventName<SM>,
+  SM extends StateMachine
+> = Union<
   {
-    [S in State<SM>]: SM['states'][S]['data'];
+    [S in StateName<SM>]: StateOutgoingEvent<S, SM> extends E ? S : never
   }
->;
-
-/**
- * ...
- *
- * @since 1.0.0
- * @category Util
- */
-export type EventData<SM extends StateMachine> = Union<
-  {
-    [E in Event<SM>]: SM['events'][E]['data'];
-  }
->;
-
-/**
- * ...
- *
- * @since 1.0.0
- * @category Util
- */
-export type InitState<SM extends StateMachine> = Union<
-  {
-    [S in keyof SM['states']]: true extends SM['states'][S]['init'] ? S : never;
-  }
->;
-
-export {
-  /**
-   * ...
-   *
-   * @since 1.0.0
-   * @category Util
-   */
-  tag,
-} from '@ts-stadium/type-utils';
+>
 
 // ----------------------------------------------------------------------------
 // Internal
 // ----------------------------------------------------------------------------
 
-type TupleToUnion<T extends any[]> = T[number];
-
-type Tuple<T> =
-  | []
-  | [T]
-  | [T, T]
-  | [T, T, T]
-  | [T, T, T, T]
-  | [T, T, T, T, T]
-  | [T, T, T, T, T, T]
-  | [T, T, T, T, T, T, T]
-  | [T, T, T, T, T, T, T, T]
-  | [T, T, T, T, T, T, T, T, T]
-  | [T, T, T, T, T, T, T, T, T, T];
-
-/**
- * ...
- *
- * @since 1.0.0
- * @category Util
- */
-export type State<SM extends StateMachine> = keyof SM['states'];
-
-type Event<SM extends StateMachine> = keyof SM['events'];
-
-type StateOutgoingEvent<
-  S extends State<SM>,
-  SM extends StateMachine
-> = TupleToUnion<SM['states'][S]['events']>;
-
-const stateOutgoingEvent = <SM extends StateMachine>(
-  stateMachine: SM,
-  state: State<SM>
-): Event<SM>[] => stateMachine.states[state].events;
-
-type EventOutgoingEvent<
-  E extends Event<SM>,
-  SM extends StateMachine
-> = TupleToUnion<SM['events'][E]['toEvents']>;
-
-type EventOutgoingState<
-  E extends Event<SM>,
-  SM extends StateMachine
-> = TupleToUnion<SM['events'][E]['toStates']>;
-
-type EventIncomingState<E extends Event<SM>, SM extends StateMachine> = Union<
-  {
-    [S in State<SM>]: StateOutgoingEvent<S, SM> extends E ? S : never;
-  }
->;
-
-/**
- * ...
- *
- * @since 1.0.0
- * @category Util
- */
-export const eventIncomingState = <SM extends StateMachine>(
-  stateMachine: SM,
-  event: Event<SM>
-): State<SM>[] =>
-  pipe(
-    stateMachine.states,
-    R.collect((k, v) => [k, v] as const),
-    A.filterMap(([k, { events }]) =>
-      A.elem(eqStrict)(event)(events as Event<SM>[]) ? O.some(k) : O.none
-    )
-  );
-
-type Extract<T> = T extends infer O ? { [K in keyof O]: O[K] } : never;
-
-type Normalize<T, A> = IsAny<T> extends false
-  ? NormalizeUnknown<NormalizeUndefined<T, A>, A>
-  : T;
-
-type NormalizeUndefined<T, A> = T extends undefined
-  ? undefined extends T
-    ? A
-    : T
-  : T;
-
-type NormalizeUnknown<T, A> = T extends unknown
-  ? unknown extends T
-    ? A
-    : T
-  : T;
-
-type RecordVal<R> = R extends Record<infer K, infer V> ? V : never;
-
-type IsAny<T> = 0 extends 1 & T ? true : false;
+type MapData<T extends Record<Name, { data: any }>> = {
+  [E in keyof T]: T[E]['data']
+}
 
 type GetNext<SM extends StateMachine> = (
-  state: StateData<SM>
+  state: Union<MapData<SM['states']>>
 ) => {
-  event?: EventData<SM>;
-  state?: StateData<SM>;
-};
+  event?: Union<MapData<SM['states']>>
+  state?: Union<MapData<SM['states']>>
+}

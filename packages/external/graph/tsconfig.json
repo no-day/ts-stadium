@@ -1,14 +1,21 @@
 {
   "extends": "../../../tsconfig.settings.json",
-  "references": [{ "path": "../../external/core" }],
+  "references": [
+    //{ "path": "../../external/core" }
+  ],
   "compilerOptions": {
     "outDir": "./dist",
     "composite": true,
     "baseUrl": ".",
+    "rootDir": "../../",
     "paths": {
-      "@ts-stadium/core": ["../../external/core/src"],
+      //"@ts-stadium/core": ["../../external/core/src/index.ts"],
       "~/*": ["./src/*"]
     }
   },
-  "include": ["src/**/*.ts"]
+  "include": [
+    "./src/**/*.ts"
+
+    //  "../../external/core/src/**/*.ts"
+  ]
 }

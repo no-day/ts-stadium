@@ -1,4 +1,4 @@
-import * as SM from '@no-day/ts-stadium';
+import * as SM from '@ts-stadium/state-machine'
 
 export const stateMachine = SM.createStateMachine({
   states: {
@@ -19,4 +19,4 @@ export const stateMachine = SM.createStateMachine({
       toStates: ['On'],
     },
   },
-});
+})

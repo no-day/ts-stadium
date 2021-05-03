@@ -6,11 +6,22 @@ import * as path from 'path';
 import { pipe } from 'fp-ts/function';
 import { glob } from 'glob';
 
+const getWorkspaces = (): Record<string, { location: string }> =>
+  pipe(
+    cp.execSync('yarn workspaces list --json'),
+    (_) => _.toString(),
+    (_) => _.trim(),
+    (_) => _.split('\n'),
+    (_) => _.map((s) => JSON.parse(s)),
+    (_) => _.reduce((acc, x) => ({ ...acc, [x.name]: x }), {})
+  );
+
 const frontMatter = (frontMatter_ as unknown) as (
   str: string
 ) => front_matter.FrontMatterResult<any>;
 
 const CHECKOUT_LATEST = false;
+const SKIP_DEMO = true;
 
 const genDocs = (workspace: string) => {
   if (CHECKOUT_LATEST) {
@@ -19,12 +30,9 @@ const genDocs = (workspace: string) => {
     cp.execSync('yarn install');
   }
   cp.execSync(`yarn workspace ${workspace} docs`);
-  const workspaces = pipe(
-    cp.execSync('yarn workspaces info'),
-    (_) => _.toString(),
-    JSON.parse
-  );
-  const workspaceLocation = workspaces[workspace].location;
+
+  const workspaceLocation = getWorkspaces()[workspace].location;
+
   const version = pipe(
     fs.readFileSync(path.join(workspaceLocation, `package.json`)),
     (_) => _.toString(),
@@ -92,12 +100,7 @@ const genDemo = (workspace: string) => {
     cp.execSync('yarn install');
   }
   cp.execSync(`yarn workspace ${workspace} build --prefix-paths`);
-  const workspaces = pipe(
-    cp.execSync('yarn workspaces info'),
-    (_) => _.toString(),
-    JSON.parse
-  );
-  const workspaceLocation = workspaces[workspace].location;
+  const workspaceLocation = getWorkspaces()[workspace].location;
   const version = pipe(
     fs.readFileSync(path.join(workspaceLocation, `package.json`)),
     (_) => _.toString(),
@@ -124,13 +127,17 @@ const main = () => {
     process.exit(1);
   }
 
-  fs.rmdirSync('public', { recursive: true });
+  cp.execSync('mkdir -p public');
+  cp.execSync('rm -rf public/*');
   cp.execSync('mkdir -p public/packages');
 
-  genDocs('@ts-stadium/core');
   genDocs('@ts-stadium/graph');
+  genDocs('@ts-stadium/type-utils');
+  genDocs('@ts-stadium/state-machine');
 
-  genDemo('@ts-stadium/demo');
+  if (!SKIP_DEMO) {
+    genDemo('@ts-stadium/demo');
+  }
 
   cp.execSync('cp -r docs/* -t public');
 };

@@ -5,5 +5,5 @@ search_enabled: true
 
 # Aux links for the upper right navigation
 aux_links:
-  '@ts-stadium/core on GitHub':
-    - 'https://github.com/no-day/ts-stadium/tree/main/packages/core'
+  '@ts-stadium/state-machine on GitHub':
+    - 'https://github.com/no-day/ts-stadium/tree/main/packages/state-machine'

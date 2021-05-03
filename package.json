@@ -9,15 +9,17 @@
     "public": "ts-node scripts/public.ts",
     "release": "bash scripts/release.sh",
     "deps": "yarn lerna exec --no-bail --stream depcheck",
-    "ci-dry": "bash scripts/ci-dry.sh"
+    "ci-dry": "bash scripts/ci-dry.sh",
+    "serve-public": "cd public; bundle exec jekyll serve -l"
   },
   "dependencies": {
     "fp-ts": "^2.9.5"
   },
   "devDependencies": {
     "depcheck": "^1.4.0",
-    "docs-ts": "^0.6.10",
+    "docs-ts": "no-day/docs-ts#ts-stadium",
     "front-matter": "^4.0.2",
+    "fs-extra": "^9.1.0",
     "glob": "^7.1.6",
     "lerna": "^4.0.0",
     "package-dependency-graph": "^1.11.2",

@@ -1,13 +1,18 @@
 {
   "extends": "../../../tsconfig.settings.json",
-  //"references": [{ "path": "../ts-stadium" }],
+  "references": [
+    { "path": "../../private/ts-stadium" },
+    { "path": "../../external/state-machine" }
+  ],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
       "@no-day/ts-stadium": ["../../private/ts-stadium/src"],
       "@no-day/ts-stadium/dot": ["../../private/ts-stadium/src/dot"],
       "@no-day/ts-stadium/graph": ["../../private/ts-stadium/src/graph"],
-      "~/*": ["./src/*"]
+
+      "~/*": ["./src/*"],
+      "@ts-stadium/state-machine": ["../../external/state-machine/src"]
     }
     //"composite": true,
   },

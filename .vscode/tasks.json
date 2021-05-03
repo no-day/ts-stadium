@@ -7,10 +7,11 @@
       "type": "shell",
       "command": "yarn",
       "options": {
-        "cwd": "packages/demo"
+        "cwd": ".",
+        "shell": { "args": ["-i"] }
       },
       "isBackground": true,
-      "args": ["develop"],
+      "args": ["workspace", "@ts-stadium/demo", "develop"],
       "group": "none",
       "presentation": {
         "reveal": "always",
@@ -25,10 +26,30 @@
       "type": "shell",
       "command": "yarn",
       "options": {
-        "cwd": "."
+        "cwd": ".",
+        "shell": { "args": ["-i"] }
       },
       "isBackground": true,
       "args": ["build:watch"],
+      "group": "none",
+      "presentation": {
+        "reveal": "always",
+        "echo": false,
+        "focus": false,
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "serve-public",
+      "runOptions": { "runOn": "folderOpen" },
+      "type": "shell",
+      "command": "yarn",
+      "options": {
+        "cwd": ".",
+        "shell": { "args": ["-i"] }
+      },
+      "isBackground": true,
+      "args": ["serve-public"],
       "group": "none",
       "presentation": {
         "reveal": "always",

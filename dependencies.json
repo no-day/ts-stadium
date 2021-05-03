@@ -1,0 +1,14 @@
+{
+  "@ts-stadium/core": {
+    "dependsOn": ["@ts-stadium/type-utils"]
+  },
+  "@ts-stadium/graph": {
+    "dependsOn": ["@ts-stadium/core"]
+  },
+  "@ts-stadium/demo": {
+    "dependsOn": ["@no-day/ts-stadium"]
+  },
+  "@no-day/ts-stadium": {
+    "dependsOn": []
+  }
+}
