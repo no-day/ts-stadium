@@ -50,7 +50,7 @@ jobs:
           fetch-depth: 0
 
       - name: Install
-        run: yarn install
+        run: YARN_CHECKSUM_BEHAVIOR=update yarn install
 
       - run: yarn public
 
