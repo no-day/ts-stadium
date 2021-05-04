@@ -1,12 +1,15 @@
 set -e
 set -o pipefail
 
+LOCAL_CHECKOUT=$PWD
 TMP=$(mktemp -d)
+
 cd $TMP
 
 echo TMP DIR: $TMP
+echo LOCAL_CHECKOUT DIR: $LOCAL_CHECKOUT
 
-git clone git@github.com:no-day/ts-stadium.git
+git clone $LOCAL_CHECKOUT
 
 cd ts-stadium
 

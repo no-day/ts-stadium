@@ -120,7 +120,7 @@ const unsafeCreateStateMachine = (
  * @since 1.0.0
  * @category Constructors
  * @example
- *   import { createStateMachine } from '@no-day/ts-stadium'
+ *   import { createStateMachine } from '@ts-stadium/state-machine'
  *
  *   const stateMachine = createStateMachine({
  *     states: {

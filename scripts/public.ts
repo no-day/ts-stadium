@@ -30,8 +30,7 @@ const genDocs = (workspace: string) => {
     cp.execSync(`git checkout ${tag}`)
     cp.execSync('yarn install')
   }
-  const output = cp.execSync(`yarn workspace ${workspace} docs`)
-  console.log(output.toString())
+  cp.execSync(`yarn workspace ${workspace} docs`, { stdio: 'inherit' })
 
   const workspaceLocation = getWorkspaces()[workspace].location
 
