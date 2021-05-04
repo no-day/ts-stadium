@@ -27,6 +27,7 @@ const genDocs = (workspace: string) => {
   console.log(`Generate docs for ${workspace} ...`)
   if (!SKIP_CHECKOUT_LATEST) {
     const tag = cp.execSync(`git describe --match "${workspace}@*" HEAD`)
+    cp.execSync(`git restore yarn.lock`)
     cp.execSync(`git checkout ${tag}`)
     cp.execSync('yarn install')
   }
@@ -98,6 +99,7 @@ const genDocs = (workspace: string) => {
 const genDemo = (workspace: string) => {
   if (!SKIP_CHECKOUT_LATEST) {
     const tag = cp.execSync(`git describe --match "${workspace}@*" HEAD`)
+    cp.execSync(`git restore yarn.lock`)
     cp.execSync(`git checkout ${tag}`)
     cp.execSync('yarn install')
   }
@@ -123,8 +125,7 @@ const genDemo = (workspace: string) => {
 const main = () => {
   if (
     !SKIP_CHECKOUT_LATEST &&
-    cp.execSync('git status --porcelain', { stdio: 'inherit' }).toString() !==
-      ''
+    cp.execSync('git status --porcelain').toString() !== ''
   ) {
     console.error('Git working directory not clean')
     process.exit(1)
