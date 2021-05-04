@@ -20,12 +20,12 @@ const frontMatter = (frontMatter_ as unknown) as (
   str: string
 ) => front_matter.FrontMatterResult<any>
 
-const CHECKOUT_LATEST = false
-const SKIP_DEMO = true
+const SKIP_CHECKOUT_LATEST = process.env['SKIP_CHECKOUT_LATEST'] || false
+const SKIP_DEMO = process.env['SKIP_DEMO'] || false
 
 const genDocs = (workspace: string) => {
   console.log(`Generate docs for ${workspace} ...`)
-  if (CHECKOUT_LATEST) {
+  if (!SKIP_CHECKOUT_LATEST) {
     const tag = cp.execSync(`git describe --match "${workspace}@*" HEAD`)
     cp.execSync(`git checkout ${tag}`)
     cp.execSync('yarn install')
@@ -96,7 +96,7 @@ const genDocs = (workspace: string) => {
 }
 
 const genDemo = (workspace: string) => {
-  if (CHECKOUT_LATEST) {
+  if (!SKIP_CHECKOUT_LATEST) {
     const tag = cp.execSync(`git describe --match "${workspace}@*" HEAD`)
     cp.execSync(`git checkout ${tag}`)
     cp.execSync('yarn install')
@@ -122,7 +122,7 @@ const genDemo = (workspace: string) => {
 
 const main = () => {
   if (
-    CHECKOUT_LATEST &&
+    !SKIP_CHECKOUT_LATEST &&
     cp.execSync('git status --porcelain').toString() !== ''
   ) {
     console.error('Git working directory not clean')
