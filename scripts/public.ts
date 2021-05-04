@@ -126,8 +126,10 @@ const main = () => {
   if (!SKIP_CHECKOUT_LATEST) {
     cp.execSync(`git restore yarn.lock`)
 
-    if (cp.execSync('git status --porcelain').toString() !== '') {
-      console.error('Git working directory not clean')
+    const result = cp.execSync('git status --porcelain').toString()
+
+    if (result !== '') {
+      console.error(`Git working directory not clean:\n${result}`)
       process.exit(1)
     }
   }
