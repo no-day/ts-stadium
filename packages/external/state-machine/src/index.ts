@@ -168,11 +168,11 @@ export const init = <SM extends StateMachine_>(
  * @category Destructors
  */
 export type CoStateToEvent<
-  E extends Event<SM>,
-  SM extends StateMachine
-> = ExtendsGuard<ImplCoStateToEvent<E, SM>, State<SM>>
+  SM extends StateMachine,
+  E extends Event<SM>
+> = ExtendsGuard<ImplCoStateToEvent<SM, E>, State<SM>>
 
-type ImplCoStateToEvent<E extends Event<SM>, SM extends StateMachine> = Union<
+type ImplCoStateToEvent<SM extends StateMachine, E extends Event<SM>> = Union<
   {
     [S in State<SM>]: StateToEvent<S, SM> extends E ? S : never
   }
@@ -205,13 +205,13 @@ type ImplEventData<SM extends StateMachine> = Union<MapData<SM['events']>>
  * @category Destructors
  */
 export type EventToEvent<
-  E extends Event<SM>,
-  SM extends StateMachine
-> = ExtendsGuard<ImplEvenToEvent<E, SM>, Event<SM>>
+  SM extends StateMachine,
+  E extends Event<SM>
+> = ExtendsGuard<ImplEvenToEvent<SM, E>, Event<SM>>
 
 type ImplEvenToEvent<
-  E extends Event<SM>,
-  SM extends StateMachine
+  SM extends StateMachine,
+  E extends Event<SM>
 > = TupleToUnion<SM['events'][E]['toEvents']>
 
 /**
@@ -221,8 +221,13 @@ type ImplEvenToEvent<
  * @category Destructors
  */
 export type EventToState<
-  E extends Event<SM>,
-  SM extends StateMachine
+  SM extends StateMachine,
+  E extends Event<SM>
+> = ExtendsGuard<ImplEventToState<SM, E>, State<SM>>
+
+type ImplEventToState<
+  SM extends StateMachine,
+  E extends Event<SM>
 > = TupleToUnion<SM['events'][E]['toStates']>
 
 /**
