@@ -1,7 +1,7 @@
 {
   "name": "@ts-stadium/state-machine",
   "homepage": "https://github.com/no-day/ts-stadium/tree/main/packages/external/state-machine",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "license": "MIT",
@@ -9,7 +9,7 @@
     "fp-ts": "^2.9.5"
   },
   "dependencies": {
-    "@ts-stadium/type-utils": "*"
+    "@ts-stadium/type-utils": "^1.0.1"
   },
   "scripts": {
     "build": "yarn tsc",
