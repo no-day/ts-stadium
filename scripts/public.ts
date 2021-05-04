@@ -123,12 +123,13 @@ const genDemo = (workspace: string) => {
 }
 
 const main = () => {
-  if (
-    !SKIP_CHECKOUT_LATEST &&
-    cp.execSync('git status --porcelain').toString() !== ''
-  ) {
-    console.error('Git working directory not clean')
-    process.exit(1)
+  if (!SKIP_CHECKOUT_LATEST) {
+    cp.execSync(`git restore yarn.lock`)
+
+    if (cp.execSync('git status --porcelain').toString() !== '') {
+      console.error('Git working directory not clean')
+      process.exit(1)
+    }
   }
 
   cp.execSync('mkdir -p public')
