@@ -49,8 +49,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - run: yarn set version berry
-
       - name: Install
         run: yarn install
 
