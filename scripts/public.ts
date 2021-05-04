@@ -123,7 +123,8 @@ const genDemo = (workspace: string) => {
 const main = () => {
   if (
     !SKIP_CHECKOUT_LATEST &&
-    cp.execSync('git status --porcelain').toString() !== ''
+    cp.execSync('git status --porcelain', { stdio: 'inherit' }).toString() !==
+      ''
   ) {
     console.error('Git working directory not clean')
     process.exit(1)
