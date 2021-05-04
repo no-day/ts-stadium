@@ -8,7 +8,7 @@
     "outDir": "./dist",
     "composite": true,
     "paths": {
-      "~/*": ["./core/src/*"],
+      "~/*": ["./src/*"],
       "@ts-stadium/type-utils": ["../../external/type-utils/src/index.ts"],
       "@ts-stadium/state-machine": ["../../external/state-machine/src/index.ts"]
     }

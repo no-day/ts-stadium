@@ -1,0 +1,11 @@
+digraph {
+    "control"
+    "graph"
+    "state-machine"
+    "type-utils"
+
+    "control" -> "state-machine"
+    "control" -> "type-utils"
+
+    "state-machine" -> "type-utils"
+}

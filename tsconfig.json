@@ -1,12 +1,12 @@
 {
   "references": [
-    { "path": "./packages/external/core" },
+    { "path": "./packages/external/state-machine" },
     { "path": "./packages/external/graph" },
     //{ "path": "./packages/demo" },
     { "path": "./packages/private/ts-stadium" }
   ],
   //"extends": "./tsconfig.settings.json",
-  "include": ["global.d.ts"],
+  "include": ["global.d.ts", "scripts/**/*.ts"],
   "compilerOptions": {
     "noEmit": true
   }

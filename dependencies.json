@@ -1,14 +1,19 @@
 {
-  "@ts-stadium/core": {
+  "@ts-stadium/state-machine": {
     "dependsOn": ["@ts-stadium/type-utils"]
   },
+  "@ts-stadium/control": {
+    "dependsOn": ["@ts-stadium/state-machine"]
+  },
   "@ts-stadium/graph": {
-    "dependsOn": ["@ts-stadium/core"]
+    "dependsOn": ["@ts-stadium/state-machine"]
   },
   "@ts-stadium/demo": {
-    "dependsOn": ["@no-day/ts-stadium"]
+    "dependsOn": ["@no-day/ts-stadium"],
+    "private": true
   },
   "@no-day/ts-stadium": {
-    "dependsOn": []
+    "dependsOn": [],
+    "private": true
   }
 }

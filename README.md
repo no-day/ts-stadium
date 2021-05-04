@@ -2,6 +2,8 @@
 
 Write typesafe state machines and get them visualized.
 
+<img src="./dependencies.svg">
+
 ## Libraries
 
 | Package                                                                                                     | Info |
