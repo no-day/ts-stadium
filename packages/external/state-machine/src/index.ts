@@ -22,12 +22,17 @@ import {
 // ----------------------------------------------------------------------------
 
 /**
- * A type that describes data relations of a state machine.
+ * ...
  *
  * @since 1.0.0
  * @category Model
  */
-export interface StateMachine<SMS extends StateMachineSpec = StateMachineSpec> {
+export interface StateMachine<SMS extends StateMachineSpec = StateMachineSpec>
+  extends ImplStateMachine<SMS> {
+  readonly StateMachine: unique symbol
+}
+
+interface ImplStateMachine<SMS extends StateMachineSpec = StateMachineSpec> {
   states: {
     [S in keyof SMS['states']]: {
       data: Tagged<S, Normalize<SMS['states'][S]['data'], NoData>>
@@ -47,15 +52,11 @@ export interface StateMachine<SMS extends StateMachineSpec = StateMachineSpec> {
 
 type StateMachine_ = StateMachine<StateMachineSpec>
 
-// ----------------------------------------------------------------------------
-// Constructors
-// ----------------------------------------------------------------------------
-
 /**
  * ...
  *
  * @since 1.0.0
- * @category Constructors
+ * @category Model
  */
 export type Name = string | symbol | number
 
@@ -64,7 +65,7 @@ export type Name = string | symbol | number
  * `createStateMachine`.
  *
  * @since 1.0.0
- * @category Constructors
+ * @category Model
  */
 export interface StateMachineSpec<
   S extends Name = Name,
@@ -88,6 +89,10 @@ export interface StateMachineSpec<
     }
   >
 }
+
+// ----------------------------------------------------------------------------
+// Constructors
+// ----------------------------------------------------------------------------
 
 const normailizeSMState = ({
   events = [],
@@ -128,7 +133,7 @@ const unsafeCreateStateMachine = (
  *   })
  */
 export const createStateMachine = <
-  SMS extends StateMachineSpec<StateName<SMS>, EventName<SMS>>
+  SMS extends StateMachineSpec<keyof SMS['states'], keyof SMS['events']>
 >(
   spec: SMS
 ): StateMachine<SMS> =>
@@ -136,89 +141,6 @@ export const createStateMachine = <
     states: pipe(spec.states, R.map(normailizeSMState)) as any,
     events: pipe(spec.events, R.map(normailizeSMEvent)) as any,
   }) as StateMachine<SMS>
-
-// // ----------------------------------------------------------------------------
-// // Control
-// // ----------------------------------------------------------------------------
-
-// type ControlEvents<C extends URIS, SM extends StateMachine> = {
-//   [E in Event<SM>]: (
-//     state: SM['states'][EventIncomingState<E, SM>]['data']
-//   ) => Kind<
-//     C,
-//     (
-//       state: SM['states'][EventIncomingState<E, SM>]['data']
-//     ) => {
-//       event?: SM['states'][EventOutgoingEvent<E, SM>]['data'];
-//       state?: SM['states'][EventOutgoingState<E, SM>]['data'];
-//     }
-//   >;
-// };
-
-// /**
-//  * @since 1.0.0
-//  * @category Control
-//  * @example
-//  *   import * as SM from '@no-day/ts-stadium';
-//  *
-//  *   const stateMachine = SM.createStateMachine({
-//  *     states: {
-//  *       On: { events: ['Toggle'] },
-//  *       Off: { events: ['Toggle'] },
-//  *     },
-//  *     events: {
-//  *       Toggle: { toStates: ['On', 'Off'] },
-//  *     },
-//  *   });
-//  *
-//  *   const control = SM.createControl(stateMachine, {
-//  *     Toggle: () => Promise.resolve(SM.tag('On')),
-//  *   });
-//  */
-// export const createControl = <SM extends StateMachine>(stateMachine: SM) => <
-//   C extends URIS
-// >(
-//   C: Monad1<C>
-// ) => (controlEvents: ControlEvents<C, SM>) => (
-//   event: Extract<EventData<SM>>,
-//   state: Extract<StateData<SM>>
-// ): Kind<C, GetNext<SM>> =>
-//   A.elem(eqStrict)(event.tag, stateMachine.states[state.tag].events)
-//     ? // Capture Event
-//       controlEvents[event.tag](state)
-//     : // Drop Event
-//       C.of({} as GetNext<SM>);
-
-// // ----------------------------------------------------------------------------
-// // Render
-// // ----------------------------------------------------------------------------
-
-// type RenderStates<R extends URIS, SM extends StateMachine> = {
-//   [S in State<SM>]: (
-//     state: SM['states'][S]['data']
-//   ) => Kind<R, SM['events'][StateOutgoingEvent<S, SM>]['data']>;
-// };
-
-// type RenderStates2<R extends URIS2, B, SM extends StateMachine> = {
-//   [S in State<SM>]: (
-//     state: SM['states'][S]['data']
-//   ) => Kind2<R, B, SM['events'][StateOutgoingEvent<S, SM>]['data']>;
-// };
-
-// /**
-//  * @since 1.0.0
-//  * @category Render
-//  */
-// export const createRender: {
-//   <SM extends StateMachine>(stateMachine: SM): <R extends URIS2, B>(
-//     renderStates: RenderStates2<R, B, SM>
-//   ) => (state: StateData<SM>) => Kind2<R, B, EventData<SM>>;
-
-//   <SM extends StateMachine>(stateMachine: SM): <R extends URIS>(
-//     renderStates: RenderStates<R, SM>
-//   ) => (state: StateData<SM>) => Kind<R, EventData<SM>>;
-// } = (stateMachine: any) => (renderStates: any) => (state: any) =>
-//   renderStates[state.tag](state);
 
 // ----------------------------------------------------------------------------
 // Util
@@ -233,7 +155,7 @@ export const createStateMachine = <
 export const init = <SM extends StateMachine_>(
   stateMachine: SM,
   initState: InitState<SM['states']>
-): State<SM> => initState
+): StateData<SM> => initState
 
 // ----------------------------------------------------------------------------
 // Destructors
@@ -245,7 +167,16 @@ export const init = <SM extends StateMachine_>(
  * @since 1.0.0
  * @category Destructors
  */
-export type State<SM extends StateMachine> = Union<MapData<SM['states']>>
+export type CoStateToEvent<
+  E extends Event<SM>,
+  SM extends StateMachine
+> = ExtendsGuard<ImplCoStateToEvent<E, SM>, State<SM>>
+
+type ImplCoStateToEvent<E extends Event<SM>, SM extends StateMachine> = Union<
+  {
+    [S in State<SM>]: StateToEvent<S, SM> extends E ? S : never
+  }
+>
 
 /**
  * ...
@@ -253,7 +184,46 @@ export type State<SM extends StateMachine> = Union<MapData<SM['states']>>
  * @since 1.0.0
  * @category Destructors
  */
-export type Event<SM extends StateMachine> = Union<MapData<SM['events']>>
+export type Event<SM extends StateMachine> = ExtendsGuard<ImplEvent<SM>, Name>
+
+type ImplEvent<SM extends StateMachine> = keyof SM['events']
+
+/**
+ * ...
+ *
+ * @since 1.0.0
+ * @category Destructors
+ */
+export type EventData<SM extends StateMachine> = ImplEventData<SM>
+
+type ImplEventData<SM extends StateMachine> = Union<MapData<SM['events']>>
+
+/**
+ * ...
+ *
+ * @since 1.0.0
+ * @category Destructors
+ */
+export type EventToEvent<
+  E extends Event<SM>,
+  SM extends StateMachine
+> = ExtendsGuard<ImplEvenToEvent<E, SM>, Event<SM>>
+
+type ImplEvenToEvent<
+  E extends Event<SM>,
+  SM extends StateMachine
+> = TupleToUnion<SM['events'][E]['toEvents']>
+
+/**
+ * ...
+ *
+ * @since 1.0.0
+ * @category Destructors
+ */
+export type EventToState<
+  E extends Event<SM>,
+  SM extends StateMachine
+> = TupleToUnion<SM['events'][E]['toStates']>
 
 /**
  * ...
@@ -281,17 +251,7 @@ export type InitStates<T extends StateMachine['states']> = {
  * @since 1.0.0
  * @category Destructors
  */
-export const eventIncomingState = <SM extends StateMachine_>(
-  stateMachine: SM,
-  event: EventName<SM>
-): StateName<SM>[] =>
-  pipe(
-    stateMachine.states,
-    R.collect((k, v) => [k, v] as const),
-    A.filterMap(([k, { events }]) =>
-      A.elem(eqStrict)(event)(events as EventName<SM>[]) ? O.some(k) : O.none
-    )
-  )
+export type State<T extends { states: Record<Name, any> }> = keyof T['states']
 
 /**
  * ...
@@ -299,9 +259,9 @@ export const eventIncomingState = <SM extends StateMachine_>(
  * @since 1.0.0
  * @category Destructors
  */
-export type StateName<
-  T extends { states: Record<Name, any> }
-> = keyof T['states']
+export type StateData<SM extends StateMachine> = ImplStateData<SM>
+
+type ImplStateData<SM extends StateMachine> = Union<MapData<SM['states']>>
 
 /**
  * ...
@@ -309,18 +269,8 @@ export type StateName<
  * @since 1.0.0
  * @category Destructors
  */
-export type EventName<
-  T extends { events: Record<Name, any> }
-> = keyof T['events']
-
-/**
- * ...
- *
- * @since 1.0.0
- * @category Destructors
- */
-type StateOutgoingEvent<
-  S extends StateName<SM>,
+export type StateToEvent<
+  S extends State<SM>,
   SM extends StateMachine
 > = TupleToUnion<SM['states'][S]['events']>
 
@@ -330,10 +280,10 @@ type StateOutgoingEvent<
  * @since 1.0.0
  * @category Destructors
  */
-const stateOutgoingEvent = <SM extends StateMachine>(
+export const stateToEvents = <SM extends StateMachine>(
   stateMachine: SM,
-  state: StateName<SM>
-): EventName<SM>[] => stateMachine.states[state].events
+  state: State<SM>
+): Event<SM>[] => stateMachine.states[state].events
 
 /**
  * ...
@@ -341,48 +291,30 @@ const stateOutgoingEvent = <SM extends StateMachine>(
  * @since 1.0.0
  * @category Destructors
  */
-type EventOutgoingEvent<
-  E extends EventName<SM>,
-  SM extends StateMachine
-> = TupleToUnion<SM['events'][E]['toEvents']>
-
-/**
- * ...
- *
- * @since 1.0.0
- * @category Destructors
- */
-type EventOutgoingState<
-  E extends EventName<SM>,
-  SM extends StateMachine
-> = TupleToUnion<SM['events'][E]['toStates']>
-
-/**
- * ...
- *
- * @since 1.0.0
- * @category Destructors
- */
-type EventIncomingState<
-  E extends EventName<SM>,
-  SM extends StateMachine
-> = Union<
-  {
-    [S in StateName<SM>]: StateOutgoingEvent<S, SM> extends E ? S : never
-  }
->
+export const coStateToEvent = <SM extends StateMachine_>(
+  stateMachine: SM,
+  event: Event<SM>
+): State<SM>[] =>
+  pipe(
+    stateMachine.states,
+    R.collect((k, v) => [k, v] as const),
+    A.filterMap(([k, { events }]) =>
+      A.elem(eqStrict)(event)(events as Event<SM>[]) ? O.some(k) : O.none
+    )
+  )
 
 // ----------------------------------------------------------------------------
 // Internal
 // ----------------------------------------------------------------------------
 
-type MapData<T extends Record<Name, { data: any }>> = {
+/**
+ * ...
+ *
+ * @since 1.0.0
+ * @category Internal
+ */
+export type MapData<T extends Record<Name, { data: any }>> = {
   [E in keyof T]: T[E]['data']
 }
 
-type GetNext<SM extends StateMachine> = (
-  state: Union<MapData<SM['states']>>
-) => {
-  event?: Union<MapData<SM['states']>>
-  state?: Union<MapData<SM['states']>>
-}
+type ExtendsGuard<T extends G, G> = T

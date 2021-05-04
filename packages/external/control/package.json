@@ -1,0 +1,19 @@
+{
+  "name": "@ts-stadium/control",
+  "homepage": "https://github.com/no-day/ts-stadium/tree/main/packages/state-machine",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "license": "MIT",
+  "peerDependencies": {
+    "fp-ts": "^2.9.5"
+  },
+  "scripts": {
+    "build": "yarn tsc",
+    "prepublish": "yarn build",
+    "docs": "PATH=scripts:$PATH ../../../node_modules/.bin/docs-ts"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "extends": "../../../tsconfig.settings.json",
+  "references": [
+    { "path": "../../external/type-utils" },
+    { "path": "../../external/state-machine" }
+  ],
+  "compilerOptions": {
+    "outDir": "../render/dist",
+    "composite": true,
+    "paths": {
+      "~/*": ["../render/core/src/*"],
+      "@ts-stadium/type-utils": ["../../external/type-utils/src/index.ts"],
+      "@ts-stadium/state-machine": ["../../external/state-machine/src/index.ts"]
+    }
+  },
+  "include": ["../render/src/**/*.ts"]
+}

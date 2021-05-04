@@ -17,9 +17,9 @@
     "fp-ts": "^2.9.5"
   },
   "dependencies": {
-    "@ts-stadium/state-machine": "*",
     "@emotion/react": "^11.1.5",
     "@lekoarts/gatsby-theme-minimal-blog": "^2.7.3",
+    "@ts-stadium/state-machine": "*",
     "gatsby": "^2.25.3",
     "gatsby-plugin-gatsby-cloud": "^1.0.1",
     "gatsby-plugin-google-analytics": "^2.4.1",
