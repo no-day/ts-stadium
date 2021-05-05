@@ -5,7 +5,7 @@
   ],
   "scripts": {
     "build:watch": "yarn tsc --build --watch",
-    "test": "yarn workspace @no-day/ts-stadium test",
+    "test": "jest",
     "public": "ts-node scripts/public.ts",
     "release": "bash scripts/release.sh",
     "deps": "yarn lerna exec --no-bail --stream depcheck",
@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.11",
+    "@types/jest": "^26.0.23",
     "@typescript-eslint/eslint-plugin": "^4.22.1",
     "@typescript-eslint/parser": "^4.22.1",
     "chokidar-cli": "^2.1.0",
@@ -27,11 +28,14 @@
     "docs-ts": "no-day/docs-ts#ts-stadium",
     "eslint": "^7.25.0",
     "eslint-watch": "^7.0.0",
+    "fast-check": "^2.14.0",
     "front-matter": "^4.0.2",
     "fs-extra": "^9.1.0",
     "glob": "^7.1.6",
+    "jest": "^26.6.3",
     "lerna": "^4.0.0",
     "package-dependency-graph": "^1.11.2",
+    "ts-jest": "^26.5.5",
     "ts-node": "^9.1.1",
     "tsconfig-paths": "^3.9.0",
     "typescript": "^4.2.4"

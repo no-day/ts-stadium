@@ -54,6 +54,8 @@ jobs:
 
       - run: yarn lint
 
+      - run: yarn test
+
       - run: yarn public
 
       - name: Deploy
