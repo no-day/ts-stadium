@@ -11,16 +11,22 @@
     "deps": "yarn lerna exec --no-bail --stream depcheck",
     "ci-dry": "bash scripts/ci-dry.sh",
     "serve-public": "cd public; bundle exec jekyll serve -l",
-    "dot": "dot -Tsvg dependencies.dot -o dependencies.svg"
+    "dot": "dot -Tsvg dependencies.dot -o dependencies.svg",
+    "lint": "eslint --ext .js,.ts --max-warnings 0 'packages/*/*/@(src|content)/**/*.ts'",
+    "lint:watch": "esw --watch --ext .js,.ts 'packages/*/*/@(src|content)/**/*.ts'"
   },
   "dependencies": {
     "fp-ts": "^2.9.5"
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.11",
+    "@typescript-eslint/eslint-plugin": "^4.22.1",
+    "@typescript-eslint/parser": "^4.22.1",
     "chokidar-cli": "^2.1.0",
     "depcheck": "^1.4.0",
     "docs-ts": "no-day/docs-ts#ts-stadium",
+    "eslint": "^7.25.0",
+    "eslint-watch": "^7.0.0",
     "front-matter": "^4.0.2",
     "fs-extra": "^9.1.0",
     "glob": "^7.1.6",

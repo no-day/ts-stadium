@@ -15,4 +15,6 @@ cd ts-stadium
 
 yarn install
 
+yarn lint
+
 yarn public

@@ -57,6 +57,25 @@
         "focus": false,
         "panel": "dedicated"
       }
+    },
+    {
+      "label": "lint:watch",
+      "runOptions": { "runOn": "folderOpen" },
+      "type": "shell",
+      "command": "yarn",
+      "options": {
+        "cwd": ".",
+        "shell": { "args": ["-i"] }
+      },
+      "isBackground": true,
+      "args": ["lint:watch"],
+      "group": "none",
+      "presentation": {
+        "reveal": "always",
+        "echo": false,
+        "focus": false,
+        "panel": "dedicated"
+      }
     }
     // {
     //   "label": "demo:watch",

@@ -52,6 +52,8 @@ jobs:
       - name: Install
         run: yarn install
 
+      - run: yarn lint
+
       - run: yarn public
 
       - name: Deploy
