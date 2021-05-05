@@ -8,6 +8,8 @@ public/
 yarn-error.log
 Gemfile.lock
 **/*.buildinfo
+.cache/
 
 .yarn/*
 !.yarn/releases
+/report

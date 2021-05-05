@@ -13,5 +13,5 @@
       "@ts-stadium/state-machine": ["../../external/state-machine/src/index.ts"]
     }
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts", "tests/**/*.ts"]
 }

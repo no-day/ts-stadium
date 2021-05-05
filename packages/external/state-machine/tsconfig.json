@@ -9,5 +9,5 @@
       "@ts-stadium/type-utils": ["../../external/type-utils/src/index.ts"]
     }
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts", "tests/**/*.ts"]
 }

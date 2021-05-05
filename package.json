@@ -8,6 +8,7 @@
     "@typescript-eslint/eslint-plugin": "^4.22.1",
     "@typescript-eslint/parser": "^4.22.1",
     "chokidar-cli": "^2.1.0",
+    "cspell": "^5.3.12",
     "depcheck": "^1.4.0",
     "docs-ts": "no-day/docs-ts#ts-stadium",
     "eslint": "^7.25.0",
@@ -27,6 +28,7 @@
   "name": "ts-stadium",
   "private": true,
   "scripts": {
+    "spell": "cspell",
     "build": "yarn tsc --build",
     "build:watch": "yarn tsc --build --watch",
     "ci-dry": "bash scripts/ci-dry.sh",
