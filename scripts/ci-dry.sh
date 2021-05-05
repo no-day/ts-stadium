@@ -17,4 +17,8 @@ yarn install
 
 yarn lint
 
+yarn build
+
+yarn test
+
 yarn public

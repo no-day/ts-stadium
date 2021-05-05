@@ -1,11 +1,14 @@
 {
   "references": [
-    { "path": "./packages/external/state-machine" },
+    { "path": "./packages/external/control" },
     { "path": "./packages/external/graph" },
-    //{ "path": "./packages/demo" },
+    { "path": "./packages/external/state-machine" },
+    { "path": "./packages/external/type-utils" },
+
     { "path": "./packages/private/ts-stadium" }
+    //{ "path": "./packages/demo" },
   ],
-  //"extends": "./tsconfig.settings.json",
+  // "extends": "./tsconfig.settings.json",
   "include": ["global.d.ts", "scripts/**/*.ts"],
   "compilerOptions": {
     "noEmit": true
