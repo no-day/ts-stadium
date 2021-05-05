@@ -1,4 +1,6 @@
 digraph {
+    label="ts-stadium package dependencies";
+
     "control"
     "graph"
     "state-machine"

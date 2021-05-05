@@ -26,14 +26,14 @@ import StateMachine = SM.StateMachine
 
 type ControlEvents<C extends URIS, SM extends StateMachine> = {
   [E in SM.Event<SM>]: (
-    state: SM['states'][SM.CoStateToEvent<E, SM>]['data']
+    state: SM['states'][SM.CoStateToEvent<SM, E>]['data']
   ) => Kind<
     C,
     (
-      state: SM['states'][SM.CoStateToEvent<E, SM>]['data']
+      state: SM['states'][SM.CoStateToEvent<SM, E>]['data']
     ) => {
-      event?: SM['states'][SM.EventToEvent<E, SM>]['data']
-      state?: SM['states'][SM.EventToState<E, SM>]['data']
+      event?: SM['states'][SM.EventToEvent<SM, E>]['data']
+      state?: SM['states'][SM.EventToState<SM, E>]['data']
     }
   >
 }
@@ -42,7 +42,7 @@ type ControlEvents<C extends URIS, SM extends StateMachine> = {
  * @since 1.0.0
  * @category Control
  * @example
- *   import * as SM from '@no-day/ts-stadium'
+ *   import * as SM from '@ts-stadium/control'
  *
  *   const stateMachine = SM.createStateMachine({
  *     states: {

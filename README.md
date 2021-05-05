@@ -2,8 +2,6 @@
 
 Write typesafe state machines and get them visualized.
 
-<img src="./dependencies.svg">
-
 ## Libraries
 
 | Package                                                                                                     | Info |
@@ -12,6 +10,8 @@ Write typesafe state machines and get them visualized.
 | [@ts-stadium/graph](https://github.com/no-day/ts-stadium/tree/main/packages/external/graph)                 |      |
 | [@ts-stadium/state-machine](https://github.com/no-day/ts-stadium/tree/main/packages/external/state-machine) |      |
 | [@ts-stadium/type-utils](https://github.com/no-day/ts-stadium/tree/main/packages/external/type-utils)       |      |
+
+<img src="./dependencies.svg"/>
 
 ## Links
 

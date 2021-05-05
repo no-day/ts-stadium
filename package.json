@@ -10,7 +10,8 @@
     "release": "bash scripts/release.sh",
     "deps": "yarn lerna exec --no-bail --stream depcheck",
     "ci-dry": "bash scripts/ci-dry.sh",
-    "serve-public": "cd public; bundle exec jekyll serve -l"
+    "serve-public": "cd public; bundle exec jekyll serve -l",
+    "dot": "dot -Tsvg dependencies.dot -o dependencies.svg"
   },
   "dependencies": {
     "fp-ts": "^2.9.5"
