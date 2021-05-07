@@ -9,7 +9,7 @@
     //{ "path": "./packages/demo" },
   ],
   // "extends": "./tsconfig.settings.json",
-  "include": ["global.d.ts", "scripts/**/*.ts"],
+  "include": ["global.d.ts", "scripts/**/*.ts", "chore/**/*.ts"],
   "compilerOptions": {
     "noEmit": true
   }

@@ -1,8 +1,8 @@
 require(`dotenv`).config({
   path: `.env`,
-});
+})
 
-const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE;
+const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE
 
 module.exports = {
   pathPrefix: 'ts-stadium/demo',
@@ -33,11 +33,11 @@ module.exports = {
         externalLinks: [
           {
             name: `Github`,
-            url: `https://github.com/no-day/ts-stadium`,
+            url: process.env.GATSBY_GITHUB_LINK,
           },
           {
             name: `API`,
-            url: `https://no-day.github.io/ts-stadium`,
+            url: process.env.GATSBY_API_LINK,
           },
         ],
       },
@@ -85,4 +85,4 @@ module.exports = {
       },
     },
   ].filter(Boolean),
-};
+}

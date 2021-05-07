@@ -2,7 +2,7 @@
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
   "rules": {
-    "@typescript-eslint/rule-name": "error"
+    "sort-keys": "error"
   },
   "extends": [
     "eslint:recommended",

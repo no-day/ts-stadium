@@ -21,4 +21,4 @@ yarn build
 
 yarn test
 
-yarn public
+yarn build-public

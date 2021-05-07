@@ -9,6 +9,7 @@ yarn-error.log
 Gemfile.lock
 **/*.buildinfo
 .cache/
+**/*.dev.md
 
 .yarn/*
 !.yarn/releases

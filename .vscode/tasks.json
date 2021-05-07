@@ -1,11 +1,11 @@
 {
   "tasks": [
     {
-      "args": ["workspace", "@ts-stadium/demo", "develop"],
+      "args": ["develop"],
       "command": "yarn",
       "group": "none",
       "isBackground": true,
-      "label": "@ts-stadium/demo develop",
+      "label": "develop",
       "options": {
         "cwd": ".",
         "shell": {

@@ -51,13 +51,17 @@ jobs:
 
       - run: yarn install
 
+      - run: yarn pretty
+
       - run: yarn lint
+
+      - run: yarn spell
 
       - run: yarn build
 
       - run: yarn test
 
-      - run: yarn public
+      - run: yarn build-public
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.0.0
