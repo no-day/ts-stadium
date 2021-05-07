@@ -1,6 +1,6 @@
 # ts-stadium
 
-[API]({{{API_LINK}}}) | [Blog with Demos]({{{DEMO_LINK}}})
+[API](https://no-day.github.io/ts-stadium) | [Blog with Demos](https://no-day.github.io/ts-stadium/demo)
 
 Write typesafe state machines and get them visualized.
 
