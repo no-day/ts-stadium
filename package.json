@@ -44,7 +44,7 @@
     "dot": "dot -Tsvg dependencies.dot -o dependencies.svg",
     "lint": "yarn eslint --ext .js,.ts --max-warnings 0 'packages/*/*/@(src|content)/**/*.ts'",
     "lint:watch": "yarn esw --watch --ext .js,.ts 'packages/*/*/@(src|content)/**/*.ts'",
-    "build-public": "ts-node scripts/build-public.ts",
+    "build-public": "ts-node scripts/build-public",
     "build-public:head": "SKIP_CHECKOUT_LATEST=true ts-node scripts/build-public.ts",
     "release": "bash scripts/release.sh",
     "serve-public": "cd public; bundle exec jekyll serve -l",

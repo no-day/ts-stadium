@@ -5,7 +5,7 @@ import * as cp from 'child_process'
 import * as path from 'path'
 import { pipe } from 'fp-ts/function'
 import { glob } from 'glob'
-import { getWorkspaces } from './get-workspaces'
+import { getWorkspaceNames } from './get-workspaces'
 
 const frontMatter = (frontMatter_ as unknown) as (
   str: string
@@ -27,7 +27,7 @@ export const genPackageDocs = ({
   }
   cp.execSync(`yarn workspace ${workspace} docs`, { stdio: 'inherit' })
 
-  const workspaceLocation = getWorkspaces()[workspace].location
+  const workspaceLocation = getWorkspaceNames()[workspace].location
 
   const version = pipe(
     fs.readFileSync(path.join(workspaceLocation, `package.json`)),

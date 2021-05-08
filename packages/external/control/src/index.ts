@@ -1,12 +1,12 @@
 /** @since 1.0.0 */
 
-import { HKT, Kind, Kind2, URIS, URIS2 } from "fp-ts/HKT";
-import { pipe } from "fp-ts/function";
-import * as R from "fp-ts/Record";
-import * as A from "fp-ts/Array";
-import * as O from "fp-ts/Option";
-import { eqStrict } from "fp-ts/Eq";
-import { Monad1 } from "fp-ts/Monad";
+import { HKT, Kind, Kind2, URIS, URIS2 } from 'fp-ts/HKT'
+import { pipe } from 'fp-ts/function'
+import * as R from 'fp-ts/Record'
+import * as A from 'fp-ts/Array'
+import * as O from 'fp-ts/Option'
+import { eqStrict } from 'fp-ts/Eq'
+import { Monad1 } from 'fp-ts/Monad'
 import {
   NoData,
   Tagged,
@@ -15,10 +15,10 @@ import {
   Normalize,
   Tuple,
   RecordVal,
-} from "@ts-stadium/type-utils";
-import * as SM from "@ts-stadium/state-machine";
+} from '@ts-stadium/type-utils'
+import * as SM from '@ts-stadium/state-machine'
 
-import StateMachine = SM.StateMachine;
+import StateMachine = SM.StateMachine
 
 // ----------------------------------------------------------------------------
 // Control
@@ -26,38 +26,23 @@ import StateMachine = SM.StateMachine;
 
 type ControlEvents<C extends URIS, SM extends StateMachine> = {
   [E in SM.Event<SM>]: (
-    state: SM["states"][SM.CoStateToEvent<SM, E>]["data"]
+    state: SM['states'][SM.CoStateToEvent<SM, E>]['data']
   ) => Kind<
     C,
     (
-      state: SM["states"][SM.CoStateToEvent<SM, E>]["data"]
+      state: SM['states'][SM.CoStateToEvent<SM, E>]['data']
     ) => {
-      event?: SM["states"][SM.EventToEvent<SM, E>]["data"];
-      state?: SM["states"][SM.EventToState<SM, E>]["data"];
+      event?: SM['states'][SM.EventToEvent<SM, E>]['data']
+      state?: SM['states'][SM.EventToState<SM, E>]['data']
     }
-  >;
-};
+  >
+}
 
 /**
  * @since 1.0.0
  * @category Control
- * @example
- *   import * as SM from "@ts-stadium/control";
- *
- *   const stateMachine = SM.createStateMachine({
- *     states: {
- *       On: { events: ["Toggle"] },
- *       Off: { events: ["Toggle"] },
- *     },
- *     events: {
- *       Toggle: { toStates: ["On", "Off"] },
- *     },
- *   });
- *
- *   const control = SM.createControl(stateMachine, {
- *     Toggle: () => Promise.resolve(SM.tag("On")),
- *   });
  */
+
 export const createControl = <SM extends StateMachine>(stateMachine: SM) => <
   C extends URIS
 >(
@@ -70,14 +55,33 @@ export const createControl = <SM extends StateMachine>(stateMachine: SM) => <
     ? // Capture Event
       controlEvents[event.tag](state)
     : // Drop Event
-      C.of({} as GetNext<SM>);
+      C.of({} as GetNext<SM>)
 
 type GetNext<SM extends StateMachine> = (
-  state: Union<SM.MapData<SM["states"]>>
+  state: Union<SM.MapData<SM['states']>>
 ) => {
-  event?: Union<SM.MapData<SM["states"]>>;
-  state?: Union<SM.MapData<SM["states"]>>;
-};
+  event?: Union<SM.MapData<SM['states']>>
+  state?: Union<SM.MapData<SM['states']>>
+}
+
+// * @example
+// *   import * as SM from '@ts-stadium/state-machine'
+// *   import * as SMC from '@ts-stadium/control'
+// *   import { tag } from '@ts-stadium/type-utils'
+// *
+// *   const stateMachine = SM.createStateMachine({
+// *     states: {
+// *       On: { events: ['Toggle'] },
+// *       Off: { events: ['Toggle'] },
+// *     },
+// *     events: {
+// *       Toggle: { toStates: ['On', 'Off'] },
+// *     },
+// *   })
+// *
+// *   const control = SMC.createControl(stateMachine, {
+// *     Toggle: () => Promise.resolve(tag('On')),
+// *   })
 
 // // ----------------------------------------------------------------------------
 // // Render
@@ -113,4 +117,4 @@ type GetNext<SM extends StateMachine> = (
 const o = {
   b: 3,
   a: 1,
-};
+}

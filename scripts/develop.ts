@@ -1,4 +1,4 @@
-import { genDocs } from '../chore/gen-docs'
+import { genDocs, genPackageDocs } from '../chore/gen-docs'
 import { genPublic } from '../chore/gen-public'
 import * as cp from 'child_process'
 import * as lt from 'strong-log-transformer'
@@ -7,6 +7,10 @@ import { pipe } from 'fp-ts/lib/function'
 import * as chokidar from 'chokidar'
 import { Env } from '../chore/env'
 import { genCodeDocs } from '../chore/gen-code-docs'
+import {
+  getWorkspaceLocations,
+  getWorkspaceNames,
+} from '../chore/get-workspaces'
 
 const config = {
   gatsby: { port: 4002 },
@@ -35,6 +39,15 @@ const prefixStream = (() => {
         })
       )
       .pipe(process.stdout)
+    cp.stderr
+      .pipe(
+        lt({
+          tag: chalk[colorWheel[index % (colorWheel.length - 1)]].bold(
+            `${prefix}*:`
+          ),
+        })
+      )
+      .pipe(process.stderr)
     index++
 
     return cp
@@ -56,8 +69,8 @@ const devGithub = () => {
   })
 }
 
-const devAPI = () => {
-  genDocs({ SKIP_CHECKOUT_LATEST: true })
+const devDemo = () => {
+  cp.exec(`yarn workspace @ts-stadium/demo clean`)
 
   pipe(
     cp.exec(`yarn workspace @ts-stadium/demo develop`, {
@@ -69,52 +82,39 @@ const devAPI = () => {
     }),
     prefixStream('gatsby')
   )
-
-  chokidar.watch('docs/**/*.*').on('all', (event, path) => {
-    genPublic(env)
-  })
 }
 
-// const devGithub = () => {
-//   genPublic(env)
+const devAPI = () => {
+  pipe(
+    cp.exec(`bundle exec jekyll serve -l --port ${config.jekyll.port}`, {
+      cwd: 'public',
+    }),
+    prefixStream('jekyll')
+  )
 
-//   pipe(
-//     cp.exec(
-//       `yarn markserv -l 35728 -b false -p ${config.github.port} README.md`
-//     ),
-//     prefixStream('markserv')
-//   )
+  chokidar.watch('packages/external/*/src/**/*.ts').on('all', (event, path) => {
+    const regex = /(packages\/external\/.*)\/src/
+    const workspaceLocation = path.match(regex)[1]
+    const workspace = getWorkspaceLocations()[workspaceLocation].name
 
-//   chokidar.watch('docs/**/*.*').on('all', (event, path) => {
-//     console.log(event, path)
-//   })
-// }
+    genPackageDocs({ SKIP_CHECKOUT_LATEST: true, workspace })
+  })
+}
 
 const main = () => {
   genPublic(env)
 
+  //genDocs({ SKIP_CHECKOUT_LATEST: true })
+
+  chokidar
+    .watch('docs/**/*.*', { ignoreInitial: true })
+    .on('all', (event, path) => {
+      genPublic(env)
+    })
+
   devGithub()
-
+  devDemo()
   devAPI()
-
-  // pipe(
-  //   cp.exec('bundle exec jekyll serve -l', { cwd: 'public' }),
-  //   prefixStream('jekyll')
-  // )
-
-  // genDocs({ SKIP_CHECKOUT_LATEST: true })
-
-  // pipe(
-  //   cp.exec('yarn workspace @ts-stadium/demo develop', {
-  //     env,
-  //   }),
-  //   prefixStream('gatsby')
-  // )
-
-  // pipe(
-  //   cp.exec('bundle exec jekyll serve -l', { cwd: 'public' }),
-  //   prefixStream('jekyll')
-  // )
 }
 
 main()

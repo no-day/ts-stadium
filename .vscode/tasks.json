@@ -24,29 +24,6 @@
       "type": "shell"
     },
     {
-      "args": ["serve-public"],
-      "command": "yarn",
-      "group": "none",
-      "isBackground": true,
-      "label": "serve-public",
-      "options": {
-        "cwd": ".",
-        "shell": {
-          "args": ["-i"]
-        }
-      },
-      "presentation": {
-        "echo": false,
-        "focus": false,
-        "panel": "dedicated",
-        "reveal": "always"
-      },
-      "runOptions": {
-        "runOn": "folderOpen"
-      },
-      "type": "shell"
-    },
-    {
       "args": ["lint:watch"],
       "command": "yarn",
       "group": "none",
